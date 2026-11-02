@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://costing-analyzer.local/schemas/0.1/factor_definition.schema.json",
+  "title": "Factor definition",
+  "description": "A cost factor supplied by the host. Unknown fields and values are rejected.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "applies_on",
+    "source",
+    "factor_id",
+    "material_key",
+    "name",
+    "unit",
+    "data_source",
+    "lookup_rule",
+    "lag",
+    "max_staleness",
+    "version"
+  ],
+  "properties": {
+    "record_type": {
+      "const": "factor_definition"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "applies_on": {
+      "type": "string",
+      "format": "date",
+      "description": "The date this record applies to; drives every point-in-time check."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "retrieved_at"
+      ],
+      "properties": {
+        "link": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "factor_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$"
+    },
+    "material_key": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$",
+      "description": "Material key as read from ITEM_DESCRIPTION. Nylon cord v0.1: 840D/2, 1260D/2, 840D/1, 1890D/2, 1260D/1, chafer. Database doc ids use a slug with / replaced by - (840D-2)."
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unit": {
+      "type": "string",
+      "minLength": 1
+    },
+    "data_source": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^[a-z][a-z0-9_.-]*$"
+      },
+      "description": "Ordered series_ids; the first with a value inside tolerance wins."
+    },
+    "lookup_rule": {
+      "enum": [
+        "last_on_or_before",
+        "window_mean",
+        "period_value"
+      ]
+    },
+    "lag": {
+      "type": "string",
+      "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?$",
+      "description": "ISO 8601 duration, date part only (e.g. P0D, P1M, P3M, P14D)."
+    },
+    "window": {
+      "type": "string",
+      "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?$",
+      "description": "ISO 8601 duration, date part only (e.g. P0D, P1M, P3M, P14D)."
+    },
+    "max_staleness": {
+      "type": "string",
+      "pattern": "^P(?!$)(\\d+Y)?(\\d+M)?(\\d+W)?(\\d+D)?$",
+      "description": "ISO 8601 duration, date part only (e.g. P0D, P1M, P3M, P14D)."
+    },
+    "default_weight": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Share of price in the base month. The sum per material must be <= 1 (checked across documents by the contract loader)."
+    },
+    "fx_series": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "description": "Series used to convert this factor into the purchase currency at the delivery date; null for unitless indexes."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+$"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "lookup_rule": {
+            "const": "window_mean"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "window"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,520 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://costing-analyzer.local/schemas/0.1/breakdown_output.schema.json",
+  "title": "Breakdown output",
+  "description": "One breakdown per purchase line per config version. Contributions are real-terms amounts per kg in PKR and USD.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "applies_on",
+    "source",
+    "purchase_id",
+    "run_id",
+    "run_date",
+    "config_version",
+    "method_version",
+    "databank_snapshot",
+    "pkr_nominal",
+    "usd_nominal",
+    "pkr_real",
+    "usd_real",
+    "base_period",
+    "contributions",
+    "event_adjustment",
+    "explained_total",
+    "unexplained",
+    "flags",
+    "competitor_gap"
+  ],
+  "properties": {
+    "record_type": {
+      "const": "breakdown_output"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "applies_on": {
+      "type": "string",
+      "format": "date",
+      "description": "The date this record applies to; drives every point-in-time check."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "retrieved_at"
+      ],
+      "properties": {
+        "link": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "purchase_id": {
+      "type": "string"
+    },
+    "run_id": {
+      "type": "string"
+    },
+    "run_date": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "config_version": {
+      "type": "string"
+    },
+    "method_version": {
+      "type": "string"
+    },
+    "databank_snapshot": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "sha256 of the snapshot the run read."
+    },
+    "pkr_nominal": {
+      "type": "number",
+      "description": "PKR per kg as paid."
+    },
+    "usd_nominal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "fx_series",
+        "fx_date",
+        "fx_value",
+        "approximate"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "fx_series": {
+          "type": "string"
+        },
+        "fx_date": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date"
+        },
+        "fx_value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "approximate": {
+          "type": "boolean"
+        }
+      }
+    },
+    "pkr_real": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "index_series",
+        "base_month",
+        "index_vintage",
+        "index_value"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "index_series": {
+          "type": "string"
+        },
+        "base_month": {
+          "type": "string",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+        },
+        "index_vintage": {
+          "type": "string"
+        },
+        "index_value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "usd_real": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "index_series",
+        "base_month",
+        "index_vintage",
+        "index_value"
+      ],
+      "properties": {
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "index_series": {
+          "type": "string"
+        },
+        "base_month": {
+          "type": "string",
+          "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+        },
+        "index_vintage": {
+          "type": "string"
+        },
+        "index_value": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "base_period": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "month",
+        "base_price"
+      ],
+      "properties": {
+        "month": {
+          "anyOf": [
+            {
+              "type": "string",
+              "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "base_price": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pkr",
+            "usd"
+          ],
+          "properties": {
+            "pkr": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usd": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "contributions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "factor_id",
+          "weight",
+          "value_used",
+          "value_date",
+          "value_vintage",
+          "base_value",
+          "contribution_pkr",
+          "contribution_usd",
+          "status"
+        ],
+        "properties": {
+          "factor_id": {
+            "type": "string"
+          },
+          "weight": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1
+          },
+          "value_used": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "value_date": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date"
+          },
+          "value_vintage": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "series_id": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "base_value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "contribution_pkr": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "contribution_usd": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "status": {
+            "enum": [
+              "ok",
+              "stale",
+              "missing"
+            ]
+          }
+        }
+      }
+    },
+    "untracked": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pkr",
+        "usd"
+      ],
+      "properties": {
+        "pkr": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "usd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      },
+      "description": "w_0 term: conversion and margin, constant in real terms."
+    },
+    "event_adjustment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "total",
+        "events"
+      ],
+      "properties": {
+        "total": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pkr",
+            "usd"
+          ],
+          "properties": {
+            "pkr": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usd": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "event_id",
+              "event_type",
+              "impact",
+              "estimate_as_of"
+            ],
+            "properties": {
+              "event_id": {
+                "type": "string"
+              },
+              "event_type": {
+                "enum": [
+                  "weather",
+                  "disease",
+                  "conflict",
+                  "sanctions",
+                  "trade_policy",
+                  "plant_outage",
+                  "shipping_disruption",
+                  "fx_shock",
+                  "demand_shock"
+                ]
+              },
+              "impact": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "pkr",
+                  "usd"
+                ],
+                "properties": {
+                  "pkr": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  },
+                  "usd": {
+                    "type": [
+                      "number",
+                      "null"
+                    ]
+                  }
+                }
+              },
+              "estimate_as_of": {
+                "type": "string",
+                "format": "date"
+              },
+              "n_cases": {
+                "type": "integer"
+              }
+            }
+          }
+        }
+      }
+    },
+    "explained_total": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pkr",
+        "usd"
+      ],
+      "properties": {
+        "pkr": {
+          "type": [
+            "number",
+            "null"
+          ]
+        },
+        "usd": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "unexplained": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "value",
+        "share"
+      ],
+      "properties": {
+        "value": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "pkr",
+            "usd"
+          ],
+          "properties": {
+            "pkr": {
+              "type": [
+                "number",
+                "null"
+              ]
+            },
+            "usd": {
+              "type": [
+                "number",
+                "null"
+              ]
+            }
+          }
+        },
+        "share": {
+          "type": [
+            "number",
+            "null"
+          ]
+        }
+      }
+    },
+    "flags": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "missing_factor",
+          "stale_factor",
+          "remainder_above_threshold",
+          "thin_event_history",
+          "usd_approximate",
+          "excluded_from_pricing",
+          "identical_line",
+          "code_description_conflict",
+          "no_base_period"
+        ]
+      }
+    },
+    "competitor_gap": {
+      "type": "array",
+      "maxItems": 0,
+      "description": "Empty until Phase 4; the item shape is defined at Gate 4."
+    }
+  }
+}

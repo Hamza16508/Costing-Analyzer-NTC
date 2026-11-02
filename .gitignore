@@ -218,3 +218,22 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# --- costing analyzer additions ---
+# secrets: never commit
+.env
+.env.*
+!.env.example
+secrets/
+
+# local data and run outputs
+snapshots/
+out/
+*.xlsx
+*.xls
+
+# python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/

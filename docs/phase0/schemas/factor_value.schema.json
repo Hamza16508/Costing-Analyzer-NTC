@@ -1,0 +1,192 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://costing-analyzer.local/schemas/0.1/factor_value.schema.json",
+  "title": "Factor value",
+  "description": "One observation of one series for one period. applies_on = period_start.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "applies_on",
+    "source",
+    "series_id",
+    "period_start",
+    "period_end",
+    "value",
+    "unit",
+    "currency",
+    "status",
+    "attempts",
+    "source_link",
+    "retrieved_at",
+    "published_at",
+    "vintage",
+    "tag"
+  ],
+  "properties": {
+    "record_type": {
+      "const": "factor_value"
+    },
+    "schema_version": {
+      "const": "0.1"
+    },
+    "applies_on": {
+      "type": "string",
+      "format": "date",
+      "description": "The date this record applies to; drives every point-in-time check."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "retrieved_at"
+      ],
+      "properties": {
+        "link": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "series_id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_.-]*$"
+    },
+    "period_start": {
+      "type": "string",
+      "format": "date"
+    },
+    "period_end": {
+      "type": "string",
+      "format": "date"
+    },
+    "value": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "unit": {
+      "type": "string"
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$"
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "missing"
+      ]
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "when",
+          "where",
+          "outcome"
+        ],
+        "properties": {
+          "when": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "where": {
+            "type": "string"
+          },
+          "outcome": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "source_link": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "published_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time",
+      "description": "When the value was first public; null if unknown. Used by the stricter 'known by then' mode."
+    },
+    "vintage": {
+      "type": "string",
+      "description": "Revision label. A revision is a new record with a new vintage, never an overwrite."
+    },
+    "tag": {
+      "enum": [
+        "V",
+        "S",
+        "A",
+        null
+      ],
+      "description": "Carried from the Causal Identifier: V verified, S snippet, A approximate. Only V (or new records with status ok) are usable."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "missing"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "value": {
+            "type": "null"
+          },
+          "attempts": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "ok"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "value": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  ]
+}
