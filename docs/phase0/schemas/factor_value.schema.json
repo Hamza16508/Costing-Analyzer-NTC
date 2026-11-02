@@ -22,6 +22,7 @@
     "retrieved_at",
     "published_at",
     "vintage",
+    "source_tier",
     "tag"
   ],
   "properties": {
@@ -141,6 +142,13 @@
     "vintage": {
       "type": "string",
       "description": "Revision label. A revision is a new record with a new vintage, never an overwrite."
+    },
+    "source_tier": {
+      "enum": [
+        "primary",
+        "third_party"
+      ],
+      "description": "primary = the publisher itself; third_party = a copy held by someone else (e.g. the PBS CPI 2016-2019 copy, decision Q6, provisional)."
     },
     "tag": {
       "enum": [

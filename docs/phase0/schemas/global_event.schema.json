@@ -93,7 +93,9 @@
         "plant_outage",
         "shipping_disruption",
         "fx_shock",
-        "demand_shock"
+        "demand_shock",
+        "supply_policy",
+        "capacity_cycle"
       ]
     },
     "region": {

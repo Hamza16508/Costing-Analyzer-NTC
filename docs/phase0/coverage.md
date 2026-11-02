@@ -51,6 +51,6 @@ The shell in this session cannot reach any of these hosts: the environment's net
 
 1. **Caprolactam and benzene** (the two largest factors) have no usable free history: 4 and 6 V points. Free Chinese price sites block automated access; ChemAnalyst needs credentials. Without them, every month falls back to `missing_factor` for those factors and their weight goes to the remainder.
 2. **USD/PKR**: only 3 V points in hand. The SBP xlsx is the right source but could not be opened from this session. Every USD figure stays `usd_approximate` until it is loaded.
-3. **PBS CPI Oct 2016 – Jun 2019** on the 2015-16 national base is not confirmed from PBS itself; the one free file found is urban, commodity-wise.
+3. **PBS CPI Oct 2016 – Jun 2019** on the 2015-16 national base is not confirmed from PBS itself; the one free file found is urban, commodity-wise. Decision Q7 (provisional): use a third-party copy tagged `third_party`; revisit at Gate 1.
 4. **No China–Karachi freight lane** index exists; the SCFI composite stands in.
 5. **Competitor raw-material prices**: none until GlobalWits/Volza credentials arrive; UN Comtrade gives at best annual unit values.

@@ -119,6 +119,14 @@
       ],
       "description": "Series used to convert this factor into the purchase currency at the delivery date; null for unitless indexes."
     },
+    "host_cause": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^([a-z][a-z0-9-]*|delivered:[a-z][a-z0-9-]*)$",
+      "description": "Causal Identifier target: a causes[].id (e.g. cpl-supply) or delivered:<name> (e.g. delivered:freight, delivered:usdpkr). Optional; set at integration (decision Q3, 2 Nov 2026)."
+    },
     "version": {
       "type": "string",
       "pattern": "^\\d+\\.\\d+\\.\\d+$"

@@ -22,7 +22,7 @@ def common(record_type, extra_required, props, desc):
                            "applies_on": {**DATE, "description": "The date this record applies to; drives every point-in-time check."},
                            "source": SOURCE, **props}}
 
-PURCHASE_FLAGS = ["excluded_from_pricing", "excluded_from_volume", "intercompany", "provisional_duplicate", "identical_line", "code_description_conflict"]
+PURCHASE_FLAGS = ["excluded_from_pricing", "excluded_from_volume", "intercompany", "provisional_duplicate", "identical_line", "code_description_conflict", "duplicate_entry"]
 purchase = common("purchase_record", ["purchase_id", "po_number", "material_code", "material_name", "material_key", "purchase_date", "quantity", "quantity_unit", "currency", "unit_price", "total_price", "supplier", "import_or_local", "category", "flags", "raw", "origin"], {
     "purchase_id": {"type": "string", "pattern": r"^\d+:[^:]+:\d+$", "description": "RECEIPT_NUM:ITEM_CODE:n, n = 1-based order of the line within that receipt and item in file order."},
     "po_number": {"type": "string"}, "po_header_id": {"type": ["string", "null"]}, "lc_number": {"type": ["string", "null"]},
@@ -53,13 +53,14 @@ factor = common("factor_definition", ["factor_id", "material_key", "name", "unit
     "lag": DUR, "window": DUR, "max_staleness": DUR,
     "default_weight": {"type": "number", "minimum": 0, "maximum": 1, "description": "Share of price in the base month. The sum per material must be <= 1 (checked across documents by the contract loader)."},
     "fx_series": {"type": ["string", "null"], "description": "Series used to convert this factor into the purchase currency at the delivery date; null for unitless indexes."},
+    "host_cause": {"type": ["string", "null"], "pattern": r"^([a-z][a-z0-9-]*|delivered:[a-z][a-z0-9-]*)$", "description": "Causal Identifier target: a causes[].id (e.g. cpl-supply) or delivered:<name> (e.g. delivered:freight, delivered:usdpkr). Optional; set at integration (decision Q3, 2 Nov 2026)."},
     "version": {"type": "string", "pattern": r"^\d+\.\d+\.\d+$"}},
     "A cost factor supplied by the host. Unknown fields and values are rejected.")
 factor["allOf"] = [{"if": {"properties": {"lookup_rule": {"const": "window_mean"}}}, "then": {"required": ["window"]}}]
 
 attempt = {"type": "object", "additionalProperties": False, "required": ["when", "where", "outcome"],
            "properties": {"when": DT, "where": {"type": "string"}, "outcome": {"type": "string"}}}
-series = common("factor_value", ["series_id", "period_start", "period_end", "value", "unit", "currency", "status", "attempts", "source_link", "retrieved_at", "published_at", "vintage", "tag"], {
+series = common("factor_value", ["series_id", "period_start", "period_end", "value", "unit", "currency", "status", "attempts", "source_link", "retrieved_at", "published_at", "vintage", "source_tier", "tag"], {
     "series_id": {"type": "string", "pattern": r"^[a-z][a-z0-9_.-]*$"},
     "period_start": DATE, "period_end": DATE,
     "value": NUM_OR_NULL, "unit": {"type": "string"}, "currency": {"type": ["string", "null"], "pattern": "^[A-Z]{3}$"},
@@ -67,13 +68,14 @@ series = common("factor_value", ["series_id", "period_start", "period_end", "val
     "source_link": {"type": ["string", "null"], "format": "uri"}, "retrieved_at": DT,
     "published_at": {"type": ["string", "null"], "format": "date-time", "description": "When the value was first public; null if unknown. Used by the stricter 'known by then' mode."},
     "vintage": {"type": "string", "description": "Revision label. A revision is a new record with a new vintage, never an overwrite."},
+    "source_tier": {"enum": ["primary", "third_party"], "description": "primary = the publisher itself; third_party = a copy held by someone else (e.g. the PBS CPI 2016-2019 copy, decision Q6, provisional)."},
     "tag": {"enum": ["V", "S", "A", None], "description": "Carried from the Causal Identifier: V verified, S snippet, A approximate. Only V (or new records with status ok) are usable."}},
     "One observation of one series for one period. applies_on = period_start.")
 series["allOf"] = [
     {"if": {"properties": {"status": {"const": "missing"}}}, "then": {"properties": {"value": {"type": "null"}, "attempts": {"minItems": 1}}}},
     {"if": {"properties": {"status": {"const": "ok"}}}, "then": {"properties": {"value": {"type": "number"}}}}]
 
-EVENT_TYPES = ["weather", "disease", "conflict", "sanctions", "trade_policy", "plant_outage", "shipping_disruption", "fx_shock", "demand_shock"]
+EVENT_TYPES = ["weather", "disease", "conflict", "sanctions", "trade_policy", "plant_outage", "shipping_disruption", "fx_shock", "demand_shock", "supply_policy", "capacity_cycle"]
 event = common("global_event", ["event_id", "title", "start_date", "end_date", "first_reported_at", "event_type", "region", "affected_factor_ids", "learned_impact", "sources"], {
     "event_id": {"type": "string", "pattern": r"^[a-z0-9][a-z0-9-]*$"}, "title": {"type": "string"},
     "start_date": DATE, "end_date": {"type": ["string", "null"], "format": "date"},

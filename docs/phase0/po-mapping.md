@@ -65,7 +65,7 @@ Excluded categories (material_key = null): CLOTH 42 lines (calico, drill, twill)
 3. **Service Long March Tyres**: 8 lines, all at 0 PKR/kg, 2023-07-25 to 2026-04-16, 19,726–22,077 kg each. Confirmed.
 4. **Impossible prices**
    - Hanif Enterprises, receipt 28753, 2017-05-30: one line at 1 PKR/kg. Confirmed.
-   - Burlytex, receipt 103502, 2023-04-27: **the receipt has two lines**, not one. Same item (102-TX01204), same quantity 19,503 kg, same PO 43195, bilty 10045 and vehicle TLN-414. One line is 956,415,064 PKR/kg, the other 956.415 PKR/kg (the same digits scaled by 10^6). See open question Q1.
+   - Burlytex, receipt 103502, 2023-04-27: **the receipt has two lines**, not one. Same item (102-TX01204), same quantity 19,503 kg, same PO 43195, bilty 10045 and vehicle TLN-414. One line is 956,415,064 PKR/kg, the other 956.415 PKR/kg (the same digits scaled by 10^6). Resolved (Q1): the scaled line is a duplicate entry.
    - Chafer receipt 55748 (2019-12-11) at 2,346.35 PKR/kg: "TYRE CORD CHAFER 420D1 N6", a different product. Confirmed.
 5. **Identical lines on the same date**: receipts 75257 (2021-03-24) and 146081 (2026-01-29). Confirmed.
 6. **Code/description conflicts**: both are on the same receipt, 41304 on 2018-08-27. `102-TX01150` (otherwise 840D/2) carries a 1890D/2 description; `102-TX01305` (otherwise 1890D/2) carries an 840D/2 description. The two lines look swapped; classified by description as decided.
@@ -80,6 +80,6 @@ Excluded categories (material_key = null): CLOTH 42 lines (calico, drill, twill)
 | Receipt 132135, 4 lines on 2025-03-12 at 1 PKR/kg | provisional_duplicate, excluded_from_pricing, excluded_from_volume |
 | Service Long March, 8 zero-price lines | intercompany, excluded_from_pricing |
 | Hanif receipt 28753 | excluded_from_pricing |
-| Burlytex receipt 103502 | excluded_from_pricing (scope pending Q1) |
+| Burlytex receipt 103502, the 956,415,064 PKR/kg line | duplicate_entry, excluded_from_pricing, excluded_from_volume (Q1); the 956.415 line is priced normally |
 | Receipts 75257 and 146081 | identical_line |
 | Receipt 41304, the two swapped lines | code_description_conflict |

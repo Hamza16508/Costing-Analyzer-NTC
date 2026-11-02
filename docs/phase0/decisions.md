@@ -99,3 +99,15 @@ Rules:
 - Real-price units: the base-month CPI index value is also stored (`index_value`) so a reader can recompute the deflation.
 - Breakdown flags beyond the three named in the method: `stale_factor` (value used is inside tolerance but older than its declared lag), `usd_approximate`, `no_base_period`, and the purchase flags carried through. Listed in the breakdown schema.
 - The w_0 amount is reported as `untracked` on the breakdown, so explained_total = Σ C_i + untracked + E.
+
+## Answers to the Phase 0 open questions (Hamza, 2 Nov 2026)
+
+| # | Question | Answer |
+| --- | --- | --- |
+| Q1 | Burlytex receipt 103502 (two identical lines, one at 956,415,064 PKR/kg) | The 956,415,064 line is a duplicate entry: excluded from pricing **and** volume, flags `duplicate_entry`, `excluded_from_pricing`, `excluded_from_volume`. The 956.415 PKR/kg line is priced normally. This replaces "exclude receipt 103502 from pricing". |
+| Q2 | Mill country for traders | Set `origin_region` from the vendor name where the name states the mill's country (`origin_basis = vendor_name`). Traders and local agents are `unknown`: Altek, Burlytex, Stalwart, GPS London, Yusheng HK, Crypto Trade, HL Group, Easy Tech, MB & Company, Trade Impex, Qaisar Traders, Bond & Built, Hanif. The owner may name a mill country for any of them later (`origin_basis = confirmed_table`). |
+| Q3 | Code repository | github.com/Hamza16508/Costing-Analyzer-NTC (private). |
+| Q4 | Linking factors to Causal Identifier causes | Optional `host_cause` on the factor definition: a `causes[].id` or `delivered:<name>`. Freight and USD/PKR map to `delivered:`. |
+| Q5 | Event types for OPEC decisions and the caprolactam glut | Two types added: `supply_policy` (OPEC/OPEC+ cuts and unwinds) and `capacity_cycle` (caprolactam glut). Eleven types in all. |
+| Q6 | Network for Phase 1 | The owner will allow www.sbp.org.pk, fred.stlouisfed.org, api.eia.gov, www.pbs.gov.pk, data.gdeltproject.org, comtradeapi.un.org and static.cninfo.com.cn in the project's cloud environment. |
+| Q7 | PBS CPI national, 2015-16 base, Oct 2016 – Jun 2019 | **Provisional.** Use a third-party copy for now, stored with `source_tier = third_party`. **Ask the owner again at Gate 1**, with options: keep the copy, or request the official back series from PBS's data centre and replace it. |

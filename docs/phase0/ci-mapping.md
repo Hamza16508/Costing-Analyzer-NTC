@@ -53,7 +53,7 @@ The link runs through each ext series' `cause` field. As read on 2 Nov 2026:
 | haiyang | market | no | price benchmark (snapshot / episodes), not a factor |
 | pama | "Bias-tyre demand" (a label, not an id) | label of causes[bias-demand] | causes[bias-demand]; the field should hold the id |
 
-`converter-capacity` has no ext series; in v1 it sits inside w_0 (untracked conversion and margin). Proposal: each factor definition carries an optional `host_cause` (cause id or `delivered:<name>`) added at integration, so the mapping is explicit rather than inferred. This is a schema addition for sign-off (open question Q4).
+`converter-capacity` has no ext series; in v1 it sits inside w_0 (untracked conversion and margin). Proposal: each factor definition carries an optional `host_cause` (cause id or `delivered:<name>`) added at integration, so the mapping is explicit rather than inferred. Agreed (Q4): `host_cause` is in the factor_definition schema.
 
 ## Event category mapping (Causal Identifier → event_type)
 
@@ -62,14 +62,14 @@ The link runs through each ext series' `cause` field. As read on 2 Nov 2026:
 | conflict | 14 | conflict |
 | macro-pk | 9 | fx_shock |
 | logistics | 4 | shipping_disruption |
-| industry | 3 | plant_outage (cpl-closures-2026, cpl-china-cut-2025); cpl-glut-2025 (a capacity glut) has no exact type: provisional plant_outage, see Q5 |
+| industry | 3 | plant_outage (cpl-closures-2026, cpl-china-cut-2025); cpl-glut-2025 → capacity_cycle (Q5) |
 | weather | 3 | weather |
 | pandemic | 3 | disease |
 | trade | 5 | trade_policy (us-china-trade-war, us-tariffs-2025); yuan-7-2019, yuan-below-7-2025, yuan-slide-2022 → fx_shock |
-| policy | 8 | sanctions (us-iran-sanctions-2018); trade_policy for OPEC/OPEC+ cuts and unwinds (4), china-env-2017 and china-power-cuts → plant_outage; brexit-2020 (not relevant) → trade_policy |
+| policy | 8 | sanctions (us-iran-sanctions-2018); supply_policy for OPEC/OPEC+ cuts and unwinds (4, Q5), china-env-2017 and china-power-cuts → plant_outage; brexit-2020 (not relevant) → trade_policy |
 | other | 4 | none fits (FIFA, Notre-Dame, Olympics, Queen's death; all relevant=false): not imported |
 
-So 49 of 53 events map; the 4 "other" placebo events are not imported. OPEC supply decisions and a capacity glut have no exact type in the nine; see Q5.
+So 49 of 53 events map; the 4 "other" placebo events are not imported. Q5 added `supply_policy` and `capacity_cycle`, so every mapped event has an exact type.
 
 ## Two things for the page owner (reported, not fixed)
 

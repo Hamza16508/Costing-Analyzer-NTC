@@ -219,7 +219,8 @@
           "intercompany",
           "provisional_duplicate",
           "identical_line",
-          "code_description_conflict"
+          "code_description_conflict",
+          "duplicate_entry"
         ]
       }
     },

@@ -41,15 +41,19 @@ Nothing was written to any database, and no artifact was created.
 - **Competitor raw-material prices**: none until GlobalWits or Volza credentials arrive.
 - **Network**: this session's shell is blocked by the environment's network policy (403) for sbp.org.pk, fred.stlouisfed.org, api.eia.gov and every other source host. Pages can be read through the page-fetch tool, but Excel and CSV files cannot.
 
-## Open questions
+## Open questions: answered 2 Nov 2026
 
-- **Q1. Burlytex 103502.** Both lines carry the same delivery details, so the 956,415,064 line looks like a mis-keyed double entry. Proposal: exclude that line from pricing **and** volume, and price the 956.415 line normally. The current decision excludes the whole receipt from pricing and keeps both in volume, which would double-count 19,503 kg.
-- **Q2. Vendor-to-origin table.** Traders hide the mill's country: Altek (Dubai), Burlytex (Dubai), Stalwart (DMCC), GPS London, Yusheng (Hong Kong), Crypto Trade (Seychelles), and local agents such as HL Group, Easy Tech, MB & Company, Trade Impex, Qaisar Traders, Bond & Built and Hanif. Please confirm the mill country for each, or "unknown".
-- **Q3. Where the code lives.** No GitHub repository is attached to this project. For now the design sits in the project files. Create an empty repository (or name an existing one) and I will push it there in Phase 1.
-- **Q4. host_cause.** Should the factor definition carry an optional `host_cause` field (a cause id, or `delivered:<name>`)? Three ext series point at causes the page doesn't have (freight, pkr, market), and pama holds a label instead of an id.
-- **Q5. Event types.** OPEC/OPEC+ supply decisions (4 events) and the 2025 caprolactam glut have no exact type among the nine. Proposed: map them to trade_policy and plant_outage, or add `supply_policy` and `capacity_cycle`.
-- **Q6. Network for Phase 1.** Sourcing needs these hosts allowed: www.sbp.org.pk, fred.stlouisfed.org, api.eia.gov, www.pbs.gov.pk, data.gdeltproject.org, comtradeapi.un.org, static.cninfo.com.cn. Otherwise Phase 1 has to run where they are reachable.
-- **Q7. PBS CPI 2016–2019.** Should I request the national 2015-16 back series from PBS's data centre, as their FAQ offers, or accept a third-party copy tagged as such?
+All seven are answered; details in decisions.md ("Answers to the Phase 0 open questions").
+
+- Q1 Burlytex 103502: the 956,415,064 line is a duplicate entry, excluded from pricing and volume; the 956.415 line is priced.
+- Q2 Origin: from vendor name where stated; traders and agents `unknown` until the owner names a mill country.
+- Q3 Repository: Hamza16508/Costing-Analyzer-NTC.
+- Q4 `host_cause` added to the factor definition.
+- Q5 Event types `supply_policy` and `capacity_cycle` added.
+- Q6 The owner will allow the seven source hosts in the cloud environment.
+- Q7 **Provisional:** third-party PBS CPI copy for 2016–2019, tagged `third_party`. **Re-ask the owner at Gate 1.**
+
+Schema changes from these answers (still draft 0.1): purchase flag `duplicate_entry`; factor_definition `host_cause`; factor_value `source_tier`; event types 9 → 11.
 
 ## Sign-off requested
 
