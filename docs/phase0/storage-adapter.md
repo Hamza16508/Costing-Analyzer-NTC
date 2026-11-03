@@ -46,7 +46,7 @@ One adapter per source behind a common `SourceAdapter` interface, with slots res
 
 ## Analyzer database collections
 
-Names mirror the Causal Identifier where they exist, so integration is a copy.
+Names mirror the Causal Identifier where they exist, for compatibility only. The analyzer never writes to the Causal Identifier (standing rule, 3 Nov 2026).
 
 | Collection | Doc id | Content | Expected docs |
 | --- | --- | --- | --- |

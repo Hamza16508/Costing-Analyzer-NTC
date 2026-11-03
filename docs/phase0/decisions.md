@@ -4,6 +4,9 @@ Status: for Gate 0 sign-off by the owner and the host team.
 
 ## Scope and placement
 
+> **Standing rule (Hamza, 3 Nov 2026): the analyzer is a separate, new artifact.** The existing Causal Identifier artifact (https://claude.ai/artifact/Nor2zMiP5j1HREuKg6BtFJ) is never updated: not its page, not its database, not its access rules. It is read only, as a reference and data source. Nothing in these docs plans a change to it. Any future integration happens only on Hamza's explicit command, and the form it takes is decided then.
+
+
 - The analyzer is its own codebase (Python module, CLI, JSON contract) and its own private claude.ai artifact with its own database. Everything the analyzer writes goes to that database.
 - The Causal Identifier (https://claude.ai/artifact/Nor2zMiP5j1HREuKg6BtFJ, schema causal-identifier/2) is the later host. Its database is read only to the analyzer. Integration happens only on the owner's command. Until then the analyzer's own database is the working databank.
 - Runtime: Python run by Claude Code. Phase 5: a button on the analyzer's page fires a Claude Code Remote trigger; results are written to the page's database and shown there.
@@ -57,7 +60,7 @@ Status: for Gate 0 sign-off by the owner and the host team.
 
 ## Integration (decided at integration)
 
-Phase 5 builds both forms; the owner chooses when giving the command:
+Only on Hamza's explicit command; nothing is planned. The analyzer stays a separate artifact with its own database. The two forms below are kept as options and prepared as exports in the analyzer's own codebase. Neither is applied to the Causal Identifier unless Hamza commands it:
 - (a) analyzer values replace the Causal Identifier's estimated shares and weights, labelled;
 - (b) analyzer values are written beside them in an `analyzer` object.
 
@@ -133,4 +136,4 @@ Hamza's wording governs. Where an answer changes an earlier decision, the earlie
 | 7 | Base month under the full-coverage rule | **7A, figure it out.** Keep the rule; Claude determines each construction's base month from the coverage data. | Base month per construction is computed in Phase 1 from loaded coverage and reported at Gate 1; it may be later than Oct 2016. |
 | 8 | Invoice price or landed cost | **ERP PO_UNIT_PRICE is landed cost (confirmed by Hamza).** | Supersedes "price basis unknown; Phase 3 tests both". Factor definitions for v0.1 cover landed-cost parts: material (caprolactam, benzene, conversion), sea freight, FX, and duties and clearing inside the untracked share until a duty series exists. The Phase 3 basis test is dropped. |
 | 9 | Freight | **Custom, revisit in Phase 1.** Claude asks Hamza for attachments. Hamza will work out CFR cost by comparing the company's FOB and CFR purchases from China and look for documents that answer it. Claude also looks in the PO history for China shipments. | Phase 1 task: request the FOB/CFR comparison and documents from Hamza, and check PO history (PAYMENT terms, LC, vendor) for freight evidence. SCFI stays as the interim series. |
-| 10 | Causal Identifier data issues (duplicate po, shifted dates) | **10C.** Fix at integration time. | No change to the page now. The integration checklist (Phase 5) includes deduping its po and fixing its upload's date shift. |
+| 10 | Causal Identifier data issues (duplicate po, shifted dates) | **10C.** Fix at integration time. | **Superseded by the standing rule above:** the Causal Identifier is never changed. The issues are only reported. The analyzer's own database holds the clean, deduplicated PO copy. If Hamza ever commands an integration, he decides then what happens to that page. |

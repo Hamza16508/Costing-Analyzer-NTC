@@ -1,5 +1,7 @@
 # Mapping analyzer outputs onto causal-identifier/2 (for gate approval)
 
+This mapping keeps the analyzer's outputs **compatible** with the causal-identifier/2 schema. It is a format, not a plan to write to the existing Causal Identifier artifact. The analyzer is a separate artifact, and the existing one is never updated (standing rule, 3 Nov 2026).
+
 ## Schema confirmed from the live page (2 Nov 2026)
 
 Read from the page's embedded `DATA` object (`schema: "causal-identifier/2"`) with `scripts/check_ci_keys.py`.
@@ -71,7 +73,7 @@ The link runs through each ext series' `cause` field. As read on 2 Nov 2026:
 
 So 49 of 53 events map; the 4 "other" placebo events are not imported. Q5 added `supply_policy` and `capacity_cycle`, so every mapped event has an exact type.
 
-## Two things for the page owner (reported, not fixed)
+## Two things for the page owner (reported only; the Causal Identifier is never changed by this project)
 
 1. `po` stores each PO line twice (3,978 rows for 1,989 lines), one copy shifted a day earlier (373 Sundays vs 5 in the file).
 2. `ext/freight` is tagged V but its history comes from a third-party GitHub dashboard compiling Korea NLIC data, not from the Shanghai Shipping Exchange; the analyzer will record it as such.
