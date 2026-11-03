@@ -1,6 +1,6 @@
 # Source coverage by factor and year, 2016–2026 (Phase 0)
 
-Legend: **V** usable verified history in hand · **F** free source exists with history for that year, not yet loaded (Phase 1) · **?** free source claimed, start not verified · **P** pending credentials · **–** nothing found / missing.
+Legend: **V** usable verified history in hand · **F** free source exists with history for that year, not yet loaded (Phase 1) · **?** free source claimed, start not verified · **P** pending credentials (company-licensed: ChemAnalyst, GlobalWits, Volza; logins come later) · **–** nothing found / missing.
 
 "In hand" means V-tagged points in the Causal Identifier's `ext` (read 2 Nov 2026). S and A points count as missing.
 
@@ -12,8 +12,10 @@ Legend: **V** usable verified history in hand · **F** free source exists with h
 | USD/CNY (FRED DEXCHUS) | F | F | F | F | F | F | F | F | F | F | F | 120 V / 1 A |
 | Brent (FRED DCOILBRENTEU / EIA) | F | F | F | F | F | F | F | F | F | F | F | 121 V |
 | Freight (SCFI composite) | V | V | V | V | V | V | V | V | V | V | V | 121 V (third-party compilation) |
-| Caprolactam | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | 4 V / 48 S / 69 A |
-| Benzene | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | P / – | 6 V / 28 S / 87 A |
+| Caprolactam | P / ? | P / ? | P / ? | P / ? | P / ? | P / ? | P / ? | P / ? | P / ? | P / ? | P / ? | 4 V / 48 S / 69 A |
+| Caprolactam, free candidates: SunSirs, China Customs and UN Comtrade unit values, Haiyang filings | ? | ? | ? | ? | ? | ? | ? / Haiyang | ? / Haiyang | ? / Haiyang | ? / Haiyang | ? / Haiyang | see sources.md |
+| Benzene (NBS 10-day, free, official) | F (from Nov; Oct to check) | F | F | F | F | F | F | F | F | F | F | 6 V / 28 S / 87 A |
+| Benzene (ChemAnalyst, licensed) | P | P | P | P | P | P | P | P | P | P | P | – |
 | Haiyang N6 cord ASP (benchmark) | – | – | – | – | – | – | V (from Jun) | V | V | V | V | 6 V / 2 A |
 | PAMA sales (demand) | – | – | – | – | – | – | – | – | – | – | V (Sep) | 1 V |
 | PBS CPI national, 2015-16 base | ? | ? (Jul 2017+ claimed) | ? | F | F | F | F | F | F | F | F | – |
@@ -49,7 +51,7 @@ The shell in this session cannot reach any of these hosts: the environment's net
 
 ## Gaps that matter for v1
 
-1. **Caprolactam and benzene** (the two largest factors) have no usable free history: 4 and 6 V points. Free Chinese price sites block automated access; ChemAnalyst needs credentials. Without them, every month falls back to `missing_factor` for those factors and their weight goes to the remainder.
+1. **Caprolactam** (the largest factor) has no free series confirmed readable from Oct 2016. Candidates: SunSirs (bot check on automated fetches), China Customs and UN Comtrade monthly unit values, and Haiyang filings (2022 onward). ChemAnalyst (company-licensed, login later) fills it once connected. **Benzene** is now covered free from Nov 2016 by NBS 10-day prices (added 3 Nov 2026); see sources.md.
 2. **USD/PKR**: only 3 V points in hand. The SBP xlsx is the right source but could not be opened from this session. Every USD figure stays `usd_approximate` until it is loaded.
 3. **PBS CPI Oct 2016 – Jun 2019** on the 2015-16 national base is not confirmed from PBS itself; the one free file found is urban, commodity-wise. Decision Q7 (provisional): use a third-party copy tagged `third_party`; revisit at Gate 1.
 4. **No China–Karachi freight lane** index exists; the SCFI composite stands in.

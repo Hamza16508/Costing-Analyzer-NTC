@@ -30,6 +30,10 @@ Python in this container cannot reach the artifact database; the shell's outboun
    - the point-in-time test asserts no logged read is later than its purchase date;
    - every output carries the snapshot hash as `databank_snapshot`.
 
+## Source adapters
+
+One adapter per source behind a common `SourceAdapter` interface, with slots reserved for the company-licensed platforms (ChemAnalyst, GlobalWits, Volza) whose logins come later. A licensed adapter without credentials reports `pending_credentials` and is skipped, and the skip is logged. Details in sources.md.
+
 ## Python classes (Phase 1)
 
 | Class | Role |

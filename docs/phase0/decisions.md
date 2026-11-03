@@ -111,3 +111,9 @@ Rules:
 | Q5 | Event types for OPEC decisions and the caprolactam glut | Two types added: `supply_policy` (OPEC/OPEC+ cuts and unwinds) and `capacity_cycle` (caprolactam glut). Eleven types in all. |
 | Q6 | Network for Phase 1 | The owner will allow www.sbp.org.pk, fred.stlouisfed.org, api.eia.gov, www.pbs.gov.pk, data.gdeltproject.org, comtradeapi.un.org and static.cninfo.com.cn in the project's cloud environment. |
 | Q7 | PBS CPI national, 2015-16 base, Oct 2016 – Jun 2019 | **Provisional.** Use a third-party copy for now, stored with `source_tier = third_party`. **Ask the owner again at Gate 1**, with options: keep the copy, or request the official back series from PBS's data centre and replace it. |
+
+## Addendum (Hamza, 3 Nov 2026): licensed and free sources
+
+- **ChemAnalyst, GlobalWits and Volza** are platforms the company already has login access to. The logins will be provided later. The design reserves an adapter slot for each (sources.md), with credentials read from `.env` only. Until then each one is recorded as `pending_credentials`, and nothing that depends on them blocks Phase 1.
+- **SunSirs** is an approved source, alongside other free, public, verified sources that Claude finds. Sources found so far: NBS 10-day benzene prices (official, from Nov 2016), China Customs and UN Comtrade unit values, Haiyang filings, and FRED US PPI aromatics as a cross-check.
+- When a licensed series arrives, it is placed in the factor definitions' ordered `data_source` lists under a new config version. Free series stay as cross-checks.

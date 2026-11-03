@@ -55,6 +55,11 @@ All seven are answered; details in decisions.md ("Answers to the Phase 0 open qu
 
 Schema changes from these answers (still draft 0.1): purchase flag `duplicate_entry`; factor_definition `host_cause`; factor_value `source_tier`; event types 9 → 11.
 
+## Addendum, 3 Nov 2026: licensed and free sources
+
+- ChemAnalyst, GlobalWits and Volza are recorded as company-licensed, with logins to follow. Adapter slots and `.env` variable names are reserved (sources.md, `.env.example`), and nothing is built for them yet.
+- SunSirs is added. A search for free, verified sources found the NBS 10-day benzene price, read on the source page for Nov 2016 and Oct 2026, which closes the benzene gap. Caprolactam still has no free series confirmed readable from 2016; the candidates are listed in sources.md and get tested first in Phase 1.
+
 ## Sign-off requested
 
 From the owner and the host team: the six contracts, the v1 method (decisions.md) and the breakdown output record.
