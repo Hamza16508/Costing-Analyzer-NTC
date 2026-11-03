@@ -137,3 +137,14 @@ Hamza's wording governs. Where an answer changes an earlier decision, the earlie
 | 8 | Invoice price or landed cost | **ERP PO_UNIT_PRICE is landed cost (confirmed by Hamza).** | Supersedes "price basis unknown; Phase 3 tests both". Factor definitions for v0.1 cover landed-cost parts: material (caprolactam, benzene, conversion), sea freight, FX, and duties and clearing inside the untracked share until a duty series exists. The Phase 3 basis test is dropped. |
 | 9 | Freight | **Custom, revisit in Phase 1.** Claude asks Hamza for attachments. Hamza will work out CFR cost by comparing the company's FOB and CFR purchases from China and look for documents that answer it. Claude also looks in the PO history for China shipments. | Phase 1 task: request the FOB/CFR comparison and documents from Hamza, and check PO history (PAYMENT terms, LC, vendor) for freight evidence. SCFI stays as the interim series. |
 | 10 | Causal Identifier data issues (duplicate po, shifted dates) | **10C.** Fix at integration time. | **Superseded by the standing rule above:** the Causal Identifier is never changed. The issues are only reported. The analyzer's own database holds the clean, deduplicated PO copy. If Hamza ever commands an integration, he decides then what happens to that page. |
+
+## Network and access remedies (Hamza, 3 Nov 2026)
+
+| # | Problem | Answer | Action |
+| --- | --- | --- | --- |
+| 1 | This thread's sandbox predates the new allowlist, so every source host returns 403 and Excel/CSV files can't be read | **1A** | Phase 1 runs in a **new thread** on the new environment and tests every source host on day one; results go into coverage.md. |
+| 2 | SunSirs and 100ppi show a bot check | **2A** | Both are on the allowlist and tested from the new thread. If they still block, ask Hamza for a SunSirs login (rule 2A of the clearing round). |
+| 3 | ChemAnalyst, GlobalWits and Volza need logins | **3A** | Wait for the logins; they go in `.env` only. Slots are reserved (sources.md). |
+| 4 | China customs statistics refuse automated tools | **4A** | Use UN Comtrade's API for the same China import data instead. |
+| 5 | UN Comtrade needs a free API key | **5A and 5E** | Hamza registers a free key at comtradeplus.un.org (stored as `COMTRADE_API_KEY` in `.env`). **Meanwhile, use the public preview API and other public information.** Every value is linked and tagged with its source. |
+| 6 | Hosts missing from the allowlist | **6A** | Hamza adds all 18 hosts himself: sunsirs.com, www.sunsirs.com, www.100ppi.com, www.stats.gov.cn, www.cs.com.cn, stats.customs.gov.cn, english.customs.gov.cn, comtradeplus.un.org, api.stlouisfed.org, archive.sbp.org.pk, easydata.sbp.org.pk, api.gdeltproject.org, en.sse.net.cn, www.cninfo.com.cn, raw.githubusercontent.com, www.chemanalyst.com, www.volza.com, www.globalwits.com (the last two to be checked against the company's login addresses). |
