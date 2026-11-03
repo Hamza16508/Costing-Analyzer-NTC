@@ -39,7 +39,7 @@ const space = () => new Paragraph({ children: [], spacing: { after: 120 } });
 
 // ---------- content ----------
 const known = [
-  "The export is Sheet1 of “Nylon Tyre Cord.xls.xlsx”: 1,989 delivery lines (organisation TYR) from 19 Oct 2016 to 24 Oct 2026.",
+  "The export is Sheet1 of “Nylon Tyre Cord.xls.xlsx” (the copy attached on 3 Nov 2026, identical to the one analysed): 1,989 delivery lines (organisation TYR) from 19 Oct 2016 to 24 Oct 2026.",
   "PO_UNIT_PRICE is the landed cost in PKR per kg (confirmed by Hamza on 3 Nov 2026), and Q_VALUE = quantity × price on every line.",
   "Receipt 132135 (1 PKR/kg on 12 Mar 2025) is a provisional entry; the Service Long March zero-price lines are intercompany transfers; Hanif receipt 28753 and the 956,415,064 PKR/kg Burlytex line are excluded.",
   "Material is classified by the cord construction written in the description (840D/2, 1260D/2, 840D/1, 1890D/2, 1260D/1, chafer). CLOTH and TEXTILE lines are left out.",
@@ -100,13 +100,17 @@ const fields = [
   ["PARTY_REFERNCE: CASH, EFS", "How the transporter or local supplier was paid (cash, or EFS = electronic funds)."],
   ["LC_NUMBER blank (163 lines)", "No LC was used (local purchase, CAD or advance payment)."],
   ["BILTY_NO and VEHICLE_NUM", "The truck bilty and vehicle that delivered the goods from port or supplier to the factory."],
-  ["Several prices on one PO and item (169 of 1,390 PO-item pairs)", "Each shipment under the same PO gets its own landed cost (different exchange rate, freight or duties)."],
+  ["Several prices on one PO and item (169 of 1,390 PO-item pairs; the gap is usually 1\u20133%, but up to 61%, between shipments up to 395 days apart)", "Each shipment under the same PO gets its own landed cost (different exchange rate, freight or duties); the supplier price itself is the same."],
+  ["One LC_NUMBER on several POs (110 of 395 LCs)", "One letter of credit can cover several POs from the same supplier."],
+  ["BILTY_NO with several numbers joined by + (41 lines, e.g. 8452+8479+8289+10729)", "One receipt was delivered by several trucks."],
 ];
 
 const lines = [
   ["Receipt 75257, 24 Mar 2021", "Two identical lines: item 102-TX02169, 1,944 kg each at 787.69 PKR/kg.", ["Two real deliveries", "Entered twice by mistake"]],
   ["Receipt 146081, 29 Jan 2026", "Two identical lines: item 102-TX01879, 9,862.5 kg each at 637.06 PKR/kg.", ["Two real deliveries", "Entered twice by mistake"]],
   ["Dec 2018 and Jul 2020", "No nylon cord deliveries at all in these two months.", ["Correct, nothing was received", "Deliveries are missing from the export"]],
+  ["Receipts 89481, 152651, 153935, 156822, 158578 (2022\u20132026)", "The same item has two different prices inside one receipt (e.g. 152651: 629.47 and 687.00 PKR/kg).", ["Two shipments costed separately", "One price is provisional and not yet final"]],
+  ["16 import lines with whole-number prices (8 of them in 2026, e.g. Weifang Kelida 650.00 in Apr 2026, Jiangsu Haohui 800.00 in Sep 2026)", "Every other import line has a costed price with decimals.", ["Provisional prices, still to be replaced by the final landed cost", "Final prices that happen to be round"]],
   ["Receipt 41304, 27 Aug 2018", "Items 102-TX01150 and 102-TX01305 carry each other’s description (840D/2 and 1890D/2).", ["The description is right (we use it)", "The item code is right"]],
 ];
 
