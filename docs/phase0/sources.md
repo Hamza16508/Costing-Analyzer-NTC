@@ -38,15 +38,24 @@ At connection time, Claude will confirm with the owner whether each platform off
 
 | Factor | Source | Access | History | Verified | What it gives |
 | --- | --- | --- | --- | --- | --- |
-| Benzene (China) | **NBS (国家统计局) "流通领域重要生产资料市场价格变动情况"**, 纯苯 (石油苯, 工业级) | free, official, HTML release three times a month | from at least 1–10 Nov 2016 (5,609.4 CNY/t, copy on cs.com.cn) to mid-Oct 2026 (10,492.4 CNY/t on stats.gov.cn) | Yes, both ends opened | 10-day national market price, CNY/t. **Closes the benzene gap from Nov 2016.** Oct 2016 releases are to be checked in Phase 1 |
-| Benzene (cross-check) | FRED WPU06140197, US PPI Aromatics | free | Aug 2001 – Sep 2026, monthly, index Jun 2001=100 | Yes | US index, not China; backup and direction check only |
+| Benzene (China) | **NBS (国家统计局) "流通领域重要生产资料市场价格变动情况"**, 纯苯 (石油苯, 工业级) | free, official, HTML release three times a month | from at least 1–10 Nov 2016 (5,609.4 CNY/t)[^nbs2016] to mid-Oct 2026 (10,492.4 CNY/t)[^nbs2026] | Yes, both ends opened | 10-day national market price, CNY/t. **Closes the benzene gap from Nov 2016.** Oct 2016 releases are to be checked in Phase 1 |
+| Benzene (cross-check) | FRED WPU06140197, US PPI Aromatics | free | Aug 2001 – Sep 2026, monthly, index Jun 2001=100[^fredarom] | Yes | US index, not China; backup and direction check only |
 | Caprolactam (China) | **SunSirs** (sunsirs.com, same group as 100ppi) | free articles; price-chart history may need membership | articles from at least 2017; Sinopec weekly settlement reported | No: the site serves a bot check to automated fetches | Daily/weekly CPL market price and Sinopec settlement. Needs a browser session or the new network settings; Phase 1 tests access first |
 | Caprolactam (China imports) | China Customs statistics (stats.customs.gov.cn), HS 2933.71 | free, official, interactive query | monthly | No: robots-disallowed for automated fetches | Import value and quantity, so a monthly CNY or USD/t unit value. Interactive query; manual export if automation is not allowed |
-| Caprolactam, N6 cord (trade unit values) | UN Comtrade monthly (comtradeapi.un.org), HS 2933.71, 2902.20, 5902.10 | free with a registered key (`COMTRADE_API_KEY` in `.env`); free tier 250–500 calls/day, up to 100,000 rows per call (comtradr docs; figure not consistent) | China monthly from 2016 expected; to be confirmed | Limits read from comtradr docs; data not yet queried | Monthly unit values: China CPL imports, China 5902.10 exports (a product benchmark), Pakistan 5902.10 imports |
+| Caprolactam, N6 cord (trade unit values) | UN Comtrade monthly (comtradeapi.un.org), HS 2933.71, 2902.20, 5902.10 | free with a registered key (`COMTRADE_API_KEY` in `.env`); free tier 250–500 calls/day, up to 100,000 rows per call (comtradr docs; figure not consistent)[^comtrade] | China monthly from 2016 expected; to be confirmed | Limits read from comtradr docs; data not yet queried | Monthly unit values: China CPL imports, China 5902.10 exports (a product benchmark), Pakistan 5902.10 imports |
 | Caprolactam, N6 cord (producer) | Haiyang Technology (603382.SH) filings on cninfo | free, official PDFs | quarterly operating data since listing (Jun 2025); prospectus gives earlier years | Search only | CPL average purchase price and N6 cord average selling price; already 6 V points in the Causal Identifier |
 | Freight | SCFI composite (en.sse.net.cn) | free page | weekly | Opened, no history download | already V in the Causal Identifier (third-party compilation) |
 
 Where a free CPL series exists only as article text (SunSirs, news), each value is stored with its article link and tagged `S` until the page itself is opened and read, matching the Causal Identifier's rule.
+
+## Citation rule (decision 1, 3 Nov 2026)
+
+Every source shown in a report, doc or page is cited as a footnote with its link and the date it was opened, and marked as verified only when the page itself was read.
+
+[^nbs2016]: NBS 10-day prices, 1–10 Nov 2016 (benzene 5,609.4 CNY/t), copy on China Securities Journal: https://cs.com.cn/xwzx/hg/201611/t20161114_5093867.html (opened 3 Nov 2026).
+[^nbs2026]: NBS 10-day prices, mid-Oct 2026 (benzene 10,492.4 CNY/t): https://www.stats.gov.cn/xxgk/sjfb/zxfb2020/202610/t20261023_1965679.html (opened 3 Nov 2026).
+[^fredarom]: FRED WPU06140197, PPI Aromatics: https://fred.stlouisfed.org/series/WPU06140197 (opened 3 Nov 2026).
+[^comtrade]: comtradr documentation on UN Comtrade API limits: https://docs.ropensci.org/comtradr/articles/large_data.html (opened 3 Nov 2026).
 
 ## Still not covered free
 

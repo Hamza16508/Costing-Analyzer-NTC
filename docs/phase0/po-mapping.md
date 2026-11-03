@@ -71,7 +71,7 @@ Excluded categories (material_key = null): CLOTH 42 lines (calico, drill, twill)
 6. **Code/description conflicts**: both are on the same receipt, 41304 on 2018-08-27. `102-TX01150` (otherwise 840D/2) carries a 1890D/2 description; `102-TX01305` (otherwise 1890D/2) carries an 840D/2 description. The two lines look swapped; classified by description as decided.
 7. **Local suppliers that make tyres**: Diamond Tyres 13 lines, Crown Tyres 8, Ghauri Tyres 1. Ordinary purchases, not competitor records. Confirmed.
 8. **Gaps**: no deliveries in Dec 2018 or Jul 2020; nothing before 2016-10-19. Confirmed.
-9. **Not in the export**: PO date, LC date, invoice currency, exchange rate. Whether PO_UNIT_PRICE is invoice price or landed cost is unknown (Phase 3 tests both).
+9. **Not in the export**: PO date, LC date, invoice currency, exchange rate. PO_UNIT_PRICE is **landed cost** (confirmed by Hamza, 3 Nov 2026).
 
 ## Flags applied at rebuild (from decisions.md)
 

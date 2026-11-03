@@ -31,7 +31,7 @@ Current cause ids on the page: `cpl-supply`, `benzene`, `converter-capacity`, `c
 | causes[].current, stale, lag | latest verified value and date, staleness flag, declared lag |
 | causes[].episodes[] | global events with learned impact, n_cases, estimate date and sources |
 | causes[].indicators[] name, latest, date, frequency, refs | factor value series; the bullish/neutral/bearish bands and score stay the identifier's |
-| delivered[] | freight and USD/PKR contributions, once Phase 3 settles the price basis |
+| delivered[] | freight and USD/PKR contributions (price basis is landed cost, confirmed 3 Nov 2026) |
 | episodes[] | PO-price episodes (start/end month, prices, change), series named as the analyzer's |
 | sources[], workings, couldNotVerify, confidence, weakestLink, nextData | provenance, explained share, config version, flags, coverage gaps |
 | competitorGap (new, additive) | competitor records and the gap per factor (Phase 4); additive, so the current page still reads the JSON |

@@ -60,6 +60,13 @@ Schema changes from these answers (still draft 0.1): purchase flag `duplicate_en
 - ChemAnalyst, GlobalWits and Volza are recorded as company-licensed, with logins to follow. Adapter slots and `.env` variable names are reserved (sources.md, `.env.example`), and nothing is built for them yet.
 - SunSirs is added. A search for free, verified sources found the NBS 10-day benzene price, read on the source page for Nov 2016 and Oct 2026, which closes the benzene gap. Caprolactam still has no free series confirmed readable from 2016; the candidates are listed in sources.md and get tested first in Phase 1.
 
+## Clearing round, 3 Nov 2026
+
+All ten remaining issues are answered; see decisions.md ("Phase 0 clearing round"). Summary:
+1 free caprolactam sources plus customs unit values, cited as footnotes; licensed slots kept · 2 SunSirs tested first, then ask for a login · 3 ask Hamza for bank LC rates, SBP as fallback · 4 third-party CPI copy settled · 5 procurement table plus Claude search (origin-table.md) · 6 both CI-based and learned weights; Hamza chooses in Phase 3 · 7 base month computed from coverage in Phase 1 · 8 **PO price is landed cost** · 9 freight revisited in Phase 1 with Hamza's FOB/CFR data · 10 Causal Identifier data fixed at integration.
+
+Carried into Phase 1 as tasks: ask for bank LC rates; ask for freight attachments and the FOB/CFR comparison; SunSirs access test; continued origin search; base month per construction.
+
 ## Sign-off requested
 
 From the owner and the host team: the six contracts, the v1 method (decisions.md) and the breakdown output record.
