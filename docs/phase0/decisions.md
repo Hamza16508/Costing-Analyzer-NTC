@@ -31,7 +31,7 @@ Status: for Gate 0 sign-off by the owner and the host team.
 - Excluded from pricing and volume: the four 1 PKR/kg lines of receipt 132135 on 2025-03-12 (provisional entry, 26,278 kg).
 - Excluded from pricing, kept in volume: the 8 Service Long March zero-price transfers (intercompany); Hanif receipt 28753; Burlytex receipt 103502.
 - Kept and flagged: identical lines on receipts 75257 and 146081; the two 2018 code/description conflicts (classified by description).
-- Price basis unknown: Phase 3 tests "supplier invoice only" against "landed cost" and reports which fits.
+- ~~Price basis unknown: Phase 3 tests "supplier invoice only" against "landed cost" and reports which fits.~~ Superseded 3 Nov 2026: PO_UNIT_PRICE is landed cost (confirmed by Hamza).
 
 ## Competitor records
 
@@ -110,10 +110,27 @@ Rules:
 | Q4 | Linking factors to Causal Identifier causes | Optional `host_cause` on the factor definition: a `causes[].id` or `delivered:<name>`. Freight and USD/PKR map to `delivered:`. |
 | Q5 | Event types for OPEC decisions and the caprolactam glut | Two types added: `supply_policy` (OPEC/OPEC+ cuts and unwinds) and `capacity_cycle` (caprolactam glut). Eleven types in all. |
 | Q6 | Network for Phase 1 | The owner will allow www.sbp.org.pk, fred.stlouisfed.org, api.eia.gov, www.pbs.gov.pk, data.gdeltproject.org, comtradeapi.un.org and static.cninfo.com.cn in the project's cloud environment. |
-| Q7 | PBS CPI national, 2015-16 base, Oct 2016 – Jun 2019 | **Provisional.** Use a third-party copy for now, stored with `source_tier = third_party`. **Ask the owner again at Gate 1**, with options: keep the copy, or request the official back series from PBS's data centre and replace it. |
+| Q7 | PBS CPI national, 2015-16 base, Oct 2016 – Jun 2019 | **Settled 3 Nov 2026 (4A): keep the third-party copy, no re-ask.** Earlier text: **Provisional.** Use a third-party copy for now, stored with `source_tier = third_party`. **Ask the owner again at Gate 1**, with options: keep the copy, or request the official back series from PBS's data centre and replace it. |
 
 ## Addendum (Hamza, 3 Nov 2026): licensed and free sources
 
 - **ChemAnalyst, GlobalWits and Volza** are platforms the company already has login access to. The logins will be provided later. The design reserves an adapter slot for each (sources.md), with credentials read from `.env` only. Until then each one is recorded as `pending_credentials`, and nothing that depends on them blocks Phase 1.
 - **SunSirs** is an approved source, alongside other free, public, verified sources that Claude finds. Sources found so far: NBS 10-day benzene prices (official, from Nov 2016), China Customs and UN Comtrade unit values, Haiyang filings, and FRED US PPI aromatics as a cross-check.
 - When a licensed series arrives, it is placed in the factor definitions' ordered `data_source` lists under a new config version. Free series stay as cross-checks.
+
+## Phase 0 clearing round (Hamza, 3 Nov 2026)
+
+Hamza's wording governs. Where an answer changes an earlier decision, the earlier one is superseded.
+
+| # | Issue | Answer | What it means for the build |
+| --- | --- | --- | --- |
+| 1 | Caprolactam history from 2016 | **1A + 1C.** Use the free sources (SunSirs, China Customs and UN Comtrade unit values, Haiyang filings), shown as verified and **linked as footnotes**. Also use the official customs import unit values (1C). Wait for the logins for the licensed sources, with room left to add them. | Every value is stored with its link. Reports and docs cite sources as footnotes. Customs unit values form their own series, ranked as a cross-check. ChemAnalyst's slot stays reserved (sources.md). |
+| 2 | SunSirs blocks automated access | **2A.** Phase 1 tests access from the new environment first. If that fails, **ask Hamza for a login automatically**. If no login is available, ask permission for 2B (manual export or upload) in a later phase. | Phase 1 tests SunSirs first; on failure Claude asks Hamza for a login. |
+| 3 | USD/PKR | **Ask Hamza first for the bank's LC rates** (his input); if he can't provide them, **3A**: SBP's daily file. | Phase 1 opens with a request to Hamza for the LC rates. SBP is the fallback. USD stays `usd_approximate` until one of them covers a date. |
+| 4 | PBS CPI, Oct 2016 – Jun 2019 | **4A.** Keep the third-party copy, tagged `third_party`. | Replaces the earlier "provisional, re-ask at Gate 1": settled, no re-ask. |
+| 5 | Mill country for traders | **5B** (procurement fills a table), **plus an extensive search by Claude from verified sources.** | origin-table.md drafted. One finding so far (Yusheng → China, provisional, linked). The search continues in Phase 1 (company registries, then Volza/GlobalWits shipper data once connected). |
+| 6 | Starting weights per factor | **6A and 6C, both.** Draft v0.1 weights from the Causal Identifier's settings, **and** run the no-prior-weights path that waits for learned weights. **Ask Hamza in Phase 3 which to keep.** | Two config variants: `v0.1-ci` (caprolactam 0.55, freight 0.056, rest untracked; for Hamza and the host team to sign) and `v0.1-learned` (weights from Phase 3 calibration). Phase 3 gate question: which one. |
+| 7 | Base month under the full-coverage rule | **7A, figure it out.** Keep the rule; Claude determines each construction's base month from the coverage data. | Base month per construction is computed in Phase 1 from loaded coverage and reported at Gate 1; it may be later than Oct 2016. |
+| 8 | Invoice price or landed cost | **ERP PO_UNIT_PRICE is landed cost (confirmed by Hamza).** | Supersedes "price basis unknown; Phase 3 tests both". Factor definitions for v0.1 cover landed-cost parts: material (caprolactam, benzene, conversion), sea freight, FX, and duties and clearing inside the untracked share until a duty series exists. The Phase 3 basis test is dropped. |
+| 9 | Freight | **Custom, revisit in Phase 1.** Claude asks Hamza for attachments. Hamza will work out CFR cost by comparing the company's FOB and CFR purchases from China and look for documents that answer it. Claude also looks in the PO history for China shipments. | Phase 1 task: request the FOB/CFR comparison and documents from Hamza, and check PO history (PAYMENT terms, LC, vendor) for freight evidence. SCFI stays as the interim series. |
+| 10 | Causal Identifier data issues (duplicate po, shifted dates) | **10C.** Fix at integration time. | No change to the page now. The integration checklist (Phase 5) includes deduping its po and fixing its upload's date shift. |
