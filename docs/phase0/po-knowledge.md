@@ -4,7 +4,7 @@ Source: the PO questionnaire filled in by **Mohsin Ali, Deputy Manager Commercia
 
 Hamza's instruction (4 Nov 2026): this knowledge is **built into the system** as the analyzer's understanding of the company's POs. There are no supporting documents and no further PO questions. The machine-readable form is `config/po_knowledge.json`, which the analyzer loads at run time; each rule below carries the same id.
 
-Note on scope in time: the respondent held the role until Jan 2024. Answers about 2024–2026 practice are the best available, but they are not first-hand for that period.
+Note on scope in time: the respondent held the Deputy Manager Commercial role until Jan 2024 and still works closely with the commercial department in his current role. Hamza confirmed on 4 Nov 2026 that his answers are first-hand for the whole period, 2016–2026.
 
 ## 1. Price and timing
 
