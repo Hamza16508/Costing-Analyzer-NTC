@@ -223,7 +223,8 @@
           "duplicate_entry",
           "provisional_price",
           "efs_import",
-          "freight_in_price"
+          "freight_in_price",
+          "usance_fx"
         ]
       }
     },

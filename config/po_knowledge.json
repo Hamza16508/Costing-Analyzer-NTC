@@ -1,6 +1,6 @@
 {
   "record_type": "po_knowledge",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "material_scope": "nylon tyre cord",
   "source": {
     "name": "PO questionnaire, Mohsin Ali (Deputy Manager Commercial, until Jan 2024)",
@@ -33,7 +33,18 @@
     "in_price": "negotiated_bank_rate_at_BL_payment",
     "duty_rate": "PSW_WeBOC_official",
     "public_proxy": "sbp.bfer_daily.usd",
-    "proxy_flag": "usd_approximate"
+    "proxy_flag": "usd_approximate",
+    "usance_gain_loss": {
+      "applies_to_terms": [
+        "30 Days",
+        "60 Days",
+        "90 Days"
+      ],
+      "in_price": true,
+      "rate_date": "transaction_date_plus_credit_days",
+      "flag": "usance_fx",
+      "source": "Hamza 2026-11-04 (PK-32)"
+    }
   },
   "invoice_currency_share": {
     "USD": [
@@ -55,15 +66,17 @@
       "clearing_agent",
       "bank_lc_charges",
       "inland_freight",
-      "stamps_bonds"
+      "stamps_bonds",
+      "fx_gain_loss_on_usance",
+      "sindh_infrastructure_cess",
+      "do_charges",
+      "wharfage"
     ],
     "excluded": [
       "sales_tax_adjustable",
       "income_tax_withheld"
     ],
-    "unknown": [
-      "fx_gain_loss"
-    ]
+    "unknown": []
   },
   "customs_duty": {
     "pct_5902_1000_cd_rate": 0.0,
@@ -165,6 +178,25 @@
         41304
       ],
       "classify_by": "description"
+    },
+    {
+      "id": "PK-32",
+      "when": {
+        "term_name": [
+          "30 Days",
+          "60 Days",
+          "90 Days"
+        ],
+        "status": "IMPORT"
+      },
+      "flags": [
+        "usance_fx"
+      ]
+    },
+    {
+      "id": "PK-35",
+      "freight_charges": "record_of_inland_freight_already_in_price",
+      "never_add": true
     }
   ],
   "export_complete": true,
@@ -186,10 +218,23 @@
   },
   "vendor_mill_basis": "confirmed_table",
   "blank_answers": [
-    "fx_gain_loss included?",
     "usual share % per cost item",
     "mill names",
     "documents (none exist)",
     "anything else"
-  ]
+  ],
+  "training_documents": {
+    "location": "project shared folder: costing-analyzer/training/ (not in repo)",
+    "items": [
+      "LC cost sheet, rubber chemicals, 2026-11-03",
+      "LC account statement, 2026-11-02"
+    ]
+  },
+  "indicative_landed_cost_shares": {
+    "supplier_lc_cost": 0.955,
+    "sindh_infrastructure_cess": 0.018,
+    "inland_freight": 0.018,
+    "port_bank_clearing": 0.009,
+    "basis": "one rubber-chemicals consignment; sanity check only"
+  }
 }

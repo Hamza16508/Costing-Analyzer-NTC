@@ -160,3 +160,10 @@ Changes to earlier decisions:
 - **Import lead time of 40–45 days** sets the starting lag for imported-cord factors.
 - **EPI** becomes a material sub-key within each construction.
 - Payment terms (TERM_NAME) affect price, and Phase 3 tests the effect.
+
+## Follow-ups to the PO questionnaire (4 Nov 2026)
+
+- **Q3, exchange gain or loss** (Hamza): it applies to landed cost when the LC or import payment is on 30, 60 or 90 days' credit. New flag `usance_fx` (PK-32).
+- **Q1, freight**: answered by Mohsin's LC cost sheet. Port-to-factory freight is a line inside PO cost, so FREIGHT_CHARGES is never added again (PK-35).
+- **Q2, duties**: partly answered. The sample sheet shows only the Sindh Infrastructure Cess (~1.86%) and no customs, additional or regulatory duty, but it is for HS 3812, not 5902.10.
+- **Still open**: Q2 for nylon cord and EFS lines, Q4 corrections, Q5 receipt 89481, Q6 the direction of payment-term pricing, Q7 CFR since 2016.

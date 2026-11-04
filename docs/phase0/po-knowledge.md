@@ -38,7 +38,7 @@ Note on scope in time: the respondent held the Deputy Manager Commercial role un
 | --- | --- | --- |
 | PK-12 | **Included:** supplier price, sea freight, marine insurance, customs duties, port, terminal and shipping-line charges, clearing agent fees, bank and LC charges, inland freight to the factory, stamps and bonds. | Part C |
 | PK-13 | **Excluded:** sales tax (adjustable) and income tax withheld at import. | Part C |
-| PK-14 | Exchange gain or loss: **not answered** (left blank). The analyzer treats it as unknown; any effect sits in the remainder. | Part C |
+| PK-14 | Exchange gain or loss: left blank in the questionnaire. **Superseded by PK-32**: Hamza answered it on 4 Nov. | Part C |
 | PK-15 | Customs duty: normal treatment on every shipment, with **customs duty at 0%** for PCT 5902.1000. Other duties may apply; the duty rate is constant across shipments of one PO. | A8 = A + E; Part D |
 | PK-16 | Payment terms **change the price**: Sight, 60 and 90 days are priced differently. LC and CAD bank charges are inside PO_UNIT_PRICE. TERM_NAME is kept as a feature, and Phase 3 tests its effect. | B3 |
 
@@ -74,9 +74,40 @@ Note on scope in time: the respondent held the Deputy Manager Commercial role un
 
 ## Items left blank
 
-- Part C, **exchange gain or loss**: neither box ticked (PK-14).
+- Part C, **exchange gain or loss**: neither box ticked. Answered by Hamza on 4 Nov (PK-32).
 - Part C, **usual share %** for every cost item: blank (optional).
 - Part F, **mill names**: blank (optional).
 - Part G, **documents**: none. Hamza confirmed there are none to attach.
 - "Anything else": blank.
 - A3, answer E: the last sentence is cut off ("…then sent to HO for further pri."). The meaning is clear enough to use.
+
+## 8. Exchange gain or loss (Hamza, 4 Nov 2026)
+
+| Id | Rule | From |
+| --- | --- | --- |
+| PK-32 | **Exchange gain or loss is part of landed cost when the LC or import payment is on 30, 60 or 90 days' credit.** For Sight, CAD and Immediate payments, no later FX adjustment applies. For usance lines, PO_UNIT_PRICE carries the actual payment-date rate, so it can differ from the rate on the cost sheet, and the price may be revised after receipt (PK-08). The analyzer converts usance lines with the rate nearest the payment date (TRANSACTION_DATE + credit days) and flags them `usance_fx`. | Hamza, follow-up Q3; replaces PK-14 |
+
+## 9. What a landed-cost sheet looks like (training documents from Mohsin, 4 Nov 2026)
+
+Two ERP printouts for one import consignment: an LC cost sheet (3 Nov 2026) and the LC account statement (2 Nov 2026). They are kept in the project's shared folder (`costing-analyzer/training/`), **not in the repository**, because they are internal company and bank records. The consignment is **rubber chemicals (HS 3812.1000), not nylon cord**, but it goes through the same costing that produces PO_UNIT_PRICE: Chinese supplier, 25,500 kg, PR dated 29 Jul 2026, GD dated 31 Oct 2026.
+
+| Line on the cost sheet | PKR | Share of PO cost |
+| --- | --- | --- |
+| LC cost: USD 83,700 × 277.90 | 23,260,230 | 95.5% |
+| Sindh Infrastructure Cess | 433,759 (1.86% of LC cost) | 1.8% |
+| Bank charges | 42,178 | 0.2% |
+| D/O charges | 127,247 | 0.5% |
+| Freight from port to factory | 447,991 | 1.8% |
+| Wharfage | 45,219 | 0.2% |
+| Other clearing | 4,380 | 0.0% |
+| **PO cost (= landed cost)** | **24,361,004 = 955.33 PKR/kg** | 100% |
+| Sales tax (refundable, outside PO cost) | 4,219,566 | – |
+
+| Id | Rule | From |
+| --- | --- | --- |
+| PK-33 | **PO cost = LC cost (USD invoice × one exchange rate) + levies + other charges.** Refundable sales tax sits below the PO cost and is excluded. This confirms PK-12 and PK-13. | Cost sheet |
+| PK-34 | The LC cost uses **one rate** for the whole invoice (277.90 here), recorded on the sheet. The cost sheet is dated after the GD, so the rate belongs to the payment or retirement, not to the PO date. | Cost sheet; PK-05 |
+| PK-35 | **Freight from port to factory is a line inside PO cost.** Inland freight is therefore always part of landed cost. FREIGHT_CHARGES in the export is a record of that same cost and is never added again. This answers follow-up Q1 with option A, on the evidence of this sheet. | Cost sheet; PK-18 |
+| PK-36 | The duty-type levy on this consignment is the **Sindh Infrastructure Cess (~1.86% of LC value)**. No customs, additional or regulatory duty lines appear, consistent with customs duty at 0% (PK-15). Whether nylon cord (PCT 5902.1000) also carries ACD or RD is not shown, since this is a different HS code. | Cost sheet; follow-up Q2 partly answered |
+| PK-37 | Charges are booked over time as journal vouchers against the LC account (D/O, wharfage, cess, stamps, excise processing). Some are still unposted when the cost sheet is printed. The landed cost settles once these are posted, which is why early prices can be provisional (PK-08, PK-09). | LC account statement |
+| PK-38 | On this consignment, the **supplier's price is about 95% of landed cost**, and cess, port, bank and inland charges about 5%. The analyzer uses this as a sanity check only: weights still come from the factor definitions (decision 6). | Cost sheet (one consignment; indicative only) |

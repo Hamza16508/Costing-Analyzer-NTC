@@ -237,3 +237,6 @@ __pycache__/
 *.pyc
 .venv/
 .pytest_cache/
+
+# company source documents (kept in project files, not the repo)
+docs/phase0/training/
