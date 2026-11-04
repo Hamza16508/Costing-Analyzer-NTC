@@ -148,3 +148,15 @@ Hamza's wording governs. Where an answer changes an earlier decision, the earlie
 | 4 | China customs statistics refuse automated tools | **4A** | Use UN Comtrade's API for the same China import data instead. |
 | 5 | UN Comtrade needs a free API key | **5A and 5E** | Hamza registers a free key at comtradeplus.un.org (stored as `COMTRADE_API_KEY` in `.env`). **Meanwhile, use the public preview API and other public information.** Every value is linked and tagged with its source. |
 | 6 | Hosts missing from the allowlist | **6A** | Hamza adds all 18 hosts himself: sunsirs.com, www.sunsirs.com, www.100ppi.com, www.stats.gov.cn, www.cs.com.cn, stats.customs.gov.cn, english.customs.gov.cn, comtradeplus.un.org, api.stlouisfed.org, archive.sbp.org.pk, easydata.sbp.org.pk, api.gdeltproject.org, en.sse.net.cn, www.cninfo.com.cn, raw.githubusercontent.com, www.chemanalyst.com, www.volza.com, www.globalwits.com (the last two to be checked against the company's login addresses). |
+
+## PO questionnaire answers (Mohsin Ali, 3 Nov 2026; recorded 4 Nov 2026)
+
+Recorded in full in po-knowledge.md and built into the system as `config/po_knowledge.json` (Hamza, 4 Nov: the questionnaire is the knowledge used to train the analyzer on the company's POs; no documents exist to attach; no further PO questions).
+
+Changes to earlier decisions:
+- **Identical lines (75257, 146081)** are real deliveries. The `identical_line` flag stays, but is informational only.
+- **Mill country (Q5)**: the commercial table is confirmed. Every trader is China except G.T. Trading (Thailand).
+- **New flags**: `provisional_price` (16 whole-number import prices, kept in volume and excluded from pricing), `efs_import` (93 Export Facilitation Scheme lines, 2025–26; Phase 3 tests their effect), `freight_in_price` (FREIGHT_CHARGES blank).
+- **Import lead time of 40–45 days** sets the starting lag for imported-cord factors.
+- **EPI** becomes a material sub-key within each construction.
+- Payment terms (TERM_NAME) affect price, and Phase 3 tests the effect.

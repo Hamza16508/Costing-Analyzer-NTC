@@ -220,7 +220,10 @@
           "provisional_duplicate",
           "identical_line",
           "code_description_conflict",
-          "duplicate_entry"
+          "duplicate_entry",
+          "provisional_price",
+          "efs_import",
+          "freight_in_price"
         ]
       }
     },

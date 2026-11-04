@@ -67,6 +67,10 @@ All ten remaining issues are answered; see decisions.md ("Phase 0 clearing round
 
 Carried into Phase 1 as tasks: ask for bank LC rates; ask for freight attachments and the FOB/CFR comparison; SunSirs access test; continued origin search; base month per construction.
 
+## PO questionnaire, 4 Nov 2026
+
+The filled questionnaire (Mohsin Ali) is recorded as po-knowledge.md and `config/po_knowledge.json`. New findings: 16 provisional whole-number prices, 93 Export Facilitation Scheme imports in 2025–26, blank FREIGHT_CHARGES meaning freight is already in the price, 68 import lines missing their LC number, and EPI affecting price. Blank items are listed in po-knowledge.md.
+
 ## Sign-off requested
 
 From the owner and the host team: the six contracts, the v1 method (decisions.md) and the breakdown output record.

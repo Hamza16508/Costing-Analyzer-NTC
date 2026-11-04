@@ -73,6 +73,10 @@ Excluded categories (material_key = null): CLOTH 42 lines (calico, drill, twill)
 8. **Gaps**: no deliveries in Dec 2018 or Jul 2020; nothing before 2016-10-19. Confirmed.
 9. **Not in the export**: PO date, LC date, invoice currency, exchange rate. PO_UNIT_PRICE is **landed cost** (confirmed by Hamza, 3 Nov 2026).
 
+## PO knowledge from the commercial specialist
+
+See po-knowledge.md (rules PK-01 to PK-31) and `config/po_knowledge.json`.
+
 ## Flags applied at rebuild (from decisions.md)
 
 | Lines | Flags |

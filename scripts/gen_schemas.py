@@ -22,7 +22,7 @@ def common(record_type, extra_required, props, desc):
                            "applies_on": {**DATE, "description": "The date this record applies to; drives every point-in-time check."},
                            "source": SOURCE, **props}}
 
-PURCHASE_FLAGS = ["excluded_from_pricing", "excluded_from_volume", "intercompany", "provisional_duplicate", "identical_line", "code_description_conflict", "duplicate_entry"]
+PURCHASE_FLAGS = ["excluded_from_pricing", "excluded_from_volume", "intercompany", "provisional_duplicate", "identical_line", "code_description_conflict", "duplicate_entry", "provisional_price", "efs_import", "freight_in_price"]
 purchase = common("purchase_record", ["purchase_id", "po_number", "material_code", "material_name", "material_key", "purchase_date", "quantity", "quantity_unit", "currency", "unit_price", "total_price", "supplier", "import_or_local", "category", "flags", "raw", "origin"], {
     "purchase_id": {"type": "string", "pattern": r"^\d+:[^:]+:\d+$", "description": "RECEIPT_NUM:ITEM_CODE:n, n = 1-based order of the line within that receipt and item in file order."},
     "po_number": {"type": "string"}, "po_header_id": {"type": ["string", "null"]}, "lc_number": {"type": ["string", "null"]},

@@ -1,0 +1,194 @@
+{
+  "record_type": "po_knowledge",
+  "version": "1.0.0",
+  "material_scope": "nylon tyre cord",
+  "source": {
+    "name": "PO questionnaire, Mohsin Ali (Deputy Manager Commercial, until Jan 2024)",
+    "file": "docs/phase0/questionnaire/NTC-PO-Questionnaire-filled-2026-11-03.docx",
+    "answered_on": "2026-11-03",
+    "recorded_on": "2026-11-04"
+  },
+  "doc": "docs/phase0/po-knowledge.md",
+  "price": {
+    "basis": "landed_cost",
+    "currency": "PKR",
+    "unit": "kg",
+    "fixed_at": "receipt_costing",
+    "supplier_price_agreed": "per_order_spot",
+    "shipment_cadence": "quarterly",
+    "delivery_term": "CFR"
+  },
+  "lead_time_days": {
+    "IMPORT": [
+      40,
+      45
+    ],
+    "LOCAL": [
+      5,
+      10
+    ]
+  },
+  "fx": {
+    "in_price": "negotiated_bank_rate_at_BL_payment",
+    "duty_rate": "PSW_WeBOC_official",
+    "public_proxy": "sbp.bfer_daily.usd",
+    "proxy_flag": "usd_approximate"
+  },
+  "invoice_currency_share": {
+    "USD": [
+      0.9,
+      0.95
+    ],
+    "other": [
+      "CNY",
+      "EUR"
+    ]
+  },
+  "landed_cost_components": {
+    "included": [
+      "supplier_price",
+      "sea_freight",
+      "marine_insurance",
+      "customs_duty",
+      "port_terminal_shipping_line",
+      "clearing_agent",
+      "bank_lc_charges",
+      "inland_freight",
+      "stamps_bonds"
+    ],
+    "excluded": [
+      "sales_tax_adjustable",
+      "income_tax_withheld"
+    ],
+    "unknown": [
+      "fx_gain_loss"
+    ]
+  },
+  "customs_duty": {
+    "pct_5902_1000_cd_rate": 0.0,
+    "treatment": "normal",
+    "constant_within_po": true
+  },
+  "payment_terms_affect_price": true,
+  "rules": [
+    {
+      "id": "PK-09",
+      "when": {
+        "status": "IMPORT",
+        "price_is_whole_number": true,
+        "price_gt": 5
+      },
+      "flags": [
+        "provisional_price",
+        "excluded_from_pricing"
+      ],
+      "volume": "keep"
+    },
+    {
+      "id": "PK-10",
+      "when": {
+        "receipts": [
+          89481,
+          152651,
+          153935,
+          156822,
+          158578
+        ],
+        "price_is_whole_number": true
+      },
+      "flags": [
+        "provisional_price",
+        "excluded_from_pricing"
+      ],
+      "volume": "keep"
+    },
+    {
+      "id": "PK-18",
+      "when": {
+        "freight_charges": "blank"
+      },
+      "flags": [
+        "freight_in_price"
+      ],
+      "note": "FREIGHT_CHARGES is never added to PO_UNIT_PRICE"
+    },
+    {
+      "id": "PK-22",
+      "when": {
+        "status": "IMPORT",
+        "lc_number": "blank"
+      },
+      "treat_as": "missing_lc_number"
+    },
+    {
+      "id": "PK-23",
+      "when": {
+        "party_reference": "EFS"
+      },
+      "flags": [
+        "efs_import"
+      ],
+      "meaning": "Export Facilitation Scheme"
+    },
+    {
+      "id": "PK-24",
+      "when": {
+        "subinventory": "LOAN"
+      },
+      "meaning": "borrowed stock"
+    },
+    {
+      "id": "PK-25",
+      "material_sub_key": "epi",
+      "note": "EPI changes price per kg; width does not"
+    },
+    {
+      "id": "PK-26",
+      "when": {
+        "status": "LOCAL"
+      },
+      "series": "local",
+      "note": "emergency buys or borrowing returned in kind; not comparable with import landed cost"
+    },
+    {
+      "id": "PK-28",
+      "receipts": [
+        75257,
+        146081
+      ],
+      "identical_lines": "real_deliveries"
+    },
+    {
+      "id": "PK-29",
+      "receipts": [
+        41304
+      ],
+      "classify_by": "description"
+    }
+  ],
+  "export_complete": true,
+  "months_without_deliveries": [
+    "2018-12",
+    "2020-07"
+  ],
+  "vendor_mill_country": {
+    "GPS LONDON LTD., UNITED KINGDOM.": "CN",
+    "G.T. TRADING CO., LTD., THAILAND.": "TH",
+    "YUSHENG ENTERPRISE LIMITED., HONG KONG": "CN",
+    "BURLYTEX GROUP LIMITED., DUBAI, UAE.": "CN",
+    "STALWART GROUP DMCC., DUABI, UAE": "CN",
+    "ALTEK INTERNATIONAL FZE., DUBAI-UAE.": "CN",
+    "HL GROUP LTD": "CN",
+    "CRYPTO TRADE LIMITED., SEYCHELLES": "CN",
+    "JIANGSU HAOHUI TRADING CO., LTD., CHINA.": "CN",
+    "NINGBO JINLUN IMPORT & EXPORT CO., LTD., CHINA.": "CN"
+  },
+  "vendor_mill_basis": "confirmed_table",
+  "blank_answers": [
+    "fx_gain_loss included?",
+    "usual share % per cost item",
+    "mill names",
+    "documents (none exist)",
+    "anything else"
+  ]
+}
