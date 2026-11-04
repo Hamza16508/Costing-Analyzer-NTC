@@ -52,7 +52,21 @@ The shell in this session cannot reach any of these hosts: the environment's net
 ## Gaps that matter for v1
 
 1. **Caprolactam** (the largest factor) has no free series confirmed readable from Oct 2016. Candidates: SunSirs (bot check on automated fetches), China Customs and UN Comtrade monthly unit values, and Haiyang filings (2022 onward). ChemAnalyst (company-licensed, login later) fills it once connected. **Benzene** is now covered free from Nov 2016 by NBS 10-day prices (added 3 Nov 2026); see sources.md.
-2. **USD/PKR**: only 3 V points in hand. The SBP xlsx is the right source but could not be opened from this session. Every USD figure stays `usd_approximate` until it is loaded.
+2. **USD/PKR**: closed on 4 Nov by the SBP M2M file from Hamza (2015-07 to 2026-11, see the last section). It is the M2M revaluation rate, not the bank's negotiated rate (PK-06).
 3. **PBS CPI Oct 2016 – Jun 2019** on the 2015-16 national base is not confirmed from PBS itself; the one free file found is urban, commodity-wise. Decision Q7 (provisional): use a third-party copy tagged `third_party`; revisit at Gate 1.
 4. **No China–Karachi freight lane** index exists; the SCFI composite stands in.
 5. **Competitor raw-material prices**: none until GlobalWits/Volza credentials arrive; UN Comtrade gives at best annual unit values.
+
+## Company data received 4 Nov 2026 (final Phase 0 intake)
+
+Files from Hamza, kept in the project folder only (company data, not in the repository): `Cap Data with Currency rate.xlsx`, `SBP M2M Exch Rates Jul 2015 till date.xlsx`, `NTC-PO-Questionnaire 1.docx`.
+
+| Series | Range | Rows | Checks | Status |
+| --- | --- | --- | --- | --- |
+| SBP M2M rates: USD/PKR, EUR/USD, EUR/PKR, CNY/PKR, USD/CNY | 2015-07-02 to 2026-11-03 | 2,788 | no duplicates, no blanks; USD/PKR ÷ CNY/PKR = USD/CNY on every row; largest gap 10 days (around 2021-05-17) | closes the USD/PKR gap for the whole PO period; tier `company_supplied` |
+| Caprolactam, "Price / MT" | 2025-07-01 to 2026-11-04 | 407 | 352 dates, 55 repeated (2026-10-27 has two different values: 14,170.00 and 14,203.33); 140 calendar days missing; range 8,540–14,400 | unit, currency, basis and source **not stated**; level suggests CNY/t but unconfirmed. Not usable until the unit is confirmed |
+| Caprolactam file, sheet 2 (USD/PKR) | 2022-07-04 to 2026-11-03 | 1,065 | identical to the SBP file on the overlap | duplicate of the SBP series |
+
+The message described the caprolactam file as 2022–2026; the file holds only Jul 2025 – Nov 2026. 2017–2021 is promised for later today.
+
+`NTC-PO-Questionnaire 1.docx` has the same text as the filled questionnaire of 3 Nov (checked line by line): no new answers.
