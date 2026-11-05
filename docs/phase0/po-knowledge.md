@@ -85,7 +85,7 @@ Note on scope in time: the respondent held the Deputy Manager Commercial role un
 
 | Id | Rule | From |
 | --- | --- | --- |
-| PK-32 | **Exchange gain or loss is part of landed cost when the LC or import payment is on 30, 60 or 90 days' credit.** For Sight, CAD and Immediate payments, no later FX adjustment applies. For usance lines, PO_UNIT_PRICE carries the actual payment-date rate, so it can differ from the rate on the cost sheet, and the price may be revised after receipt (PK-08). The analyzer converts usance lines with the rate nearest the payment date (TRANSACTION_DATE + credit days) and flags them `usance_fx`. | Hamza, follow-up Q3; replaces PK-14 |
+| PK-32 | **Superseded by PK-42 (5 Nov).** ~~Exchange gain or loss is part of landed cost when the LC or import payment is on 30, 60 or 90 days' credit.** For Sight, CAD and Immediate payments, no later FX adjustment applies. For usance lines, PO_UNIT_PRICE carries the actual payment-date rate, so it can differ from the rate on the cost sheet, and the price may be revised after receipt (PK-08). The analyzer converts usance lines with the rate nearest the payment date (TRANSACTION_DATE + credit days) and flags them `usance_fx`.~~ | Hamza, follow-up Q3; replaces PK-14 |
 
 ## 9. What a landed-cost sheet looks like (training documents from Mohsin, 4 Nov 2026)
 
@@ -130,3 +130,9 @@ Source: Mohsin's submission on the answer page, 5 Nov 2026 09:08 UTC. It has the
 | 10 | A: **longer credit costs more** (90 days > 60 > Sight) | PK-16 direction set; Phase 3 measures it |
 | 11 | A: **CFR** for the whole period since 2016 | PK-04 holds for 2016–2026 |
 | Note | "For exchange rate gain loss adjustment it is only done when material has already been received at the factory and Purchase order has been updated as per cost sheet from provisional to actual, but the payment to the supplier (in foreign currency) has not been made yet. It happens in cases with payment terms which are not at SIGHT basis. We also call this difference as Period Cost." | PK-41. The wording suggests the gain or loss is booked **after** the PO price is final, as Period Cost, so it may sit outside PO_UNIT_PRICE. That conflicts with PK-32 (usance lines carry the payment-date rate). Owner decision pending; Phase 3 tests both rate dates on usance lines |
+
+## 11. Period Cost decision (Hamza, 5 Nov 2026)
+
+| Id | Rule | From |
+| --- | --- | --- |
+| PK-42 | Exchange gain or loss on 30, 60 and 90-day credit payments is booked **after the PO price is final**, as **Period Cost**. It is **not inside PO_UNIT_PRICE**. The analyzer converts credit-term lines at the rate near receipt (the cost-sheet rate), the same as Sight lines, and keeps `usance_fx` as an informational flag only. Replaces PK-32. | Hamza ("After Po price is final"); Mohsin's note, PK-41 |

@@ -1,6 +1,6 @@
 {
   "record_type": "po_knowledge",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "material_scope": "nylon tyre cord",
   "source": [
     {
@@ -44,10 +44,12 @@
         "60 Days",
         "90 Days"
       ],
-      "in_price": true,
-      "rate_date": "transaction_date_plus_credit_days",
+      "in_price": false,
+      "rate_date": "cost_sheet_rate_near_receipt",
       "flag": "usance_fx",
-      "source": "Hamza 2026-11-04 (PK-32)"
+      "source": "Hamza 2026-11-04 (PK-32)",
+      "booked_as": "period_cost_after_po_price_final",
+      "superseded_by": "PK-42"
     },
     "sbp_m2m_as_proxy": true,
     "usd_flag": "usd_approximate",
@@ -231,8 +233,16 @@
     {
       "id": "PK-41",
       "period_cost": "for non-Sight terms, the FX gain or loss arises after goods are received and the PO price is updated from provisional to actual, but before the supplier is paid in foreign currency; this difference is called Period Cost",
-      "whether_in_po_unit_price": "open: Mohsin's wording suggests it is booked after the PO price is final (so outside PO_UNIT_PRICE), which conflicts with PK-32; owner decision pending; Phase 3 tests both",
+      "whether_in_po_unit_price": "no: decided by Hamza 5 Nov 2026 (PK-42)",
       "basis": "Mohsin, answer page submission 5 Nov 2026 09:08 UTC"
+    },
+    {
+      "id": "PK-42",
+      "fx_gain_loss_on_credit_terms": "booked after the PO price is final, as Period Cost; not inside PO_UNIT_PRICE",
+      "conversion_rate_date": "rate near receipt (cost-sheet rate), not the payment date",
+      "flag": "usance_fx kept as informational",
+      "replaces": "PK-32 rate-date rule",
+      "basis": "Hamza, 5 Nov 2026: 'After Po price is final'"
     }
   ],
   "export_complete": true,

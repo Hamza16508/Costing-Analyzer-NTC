@@ -167,3 +167,7 @@ Changes to earlier decisions:
 - **Q1, freight**: answered by Mohsin's LC cost sheet. Port-to-factory freight is a line inside PO cost, so FREIGHT_CHARGES is never added again (PK-35).
 - **Q2, duties**: partly answered. The sample sheet shows only the Sindh Infrastructure Cess (~1.86%) and no customs, additional or regulatory duty, but it is for HS 3812, not 5902.10.
 - **Still open**: Q2 for nylon cord and EFS lines, Q4 corrections, Q5 receipt 89481, Q6 the direction of payment-term pricing, Q7 CFR since 2016.
+
+## Period Cost (5 Nov 2026)
+
+FX gain or loss on credit-term payments is booked after the PO price is final, as Period Cost, so it is outside PO_UNIT_PRICE (PK-42, replacing PK-32). All import lines are converted at the rate near receipt.
