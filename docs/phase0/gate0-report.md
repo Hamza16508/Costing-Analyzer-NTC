@@ -82,3 +82,5 @@ Mohsin's final answers are in po-knowledge.md section 10 (PK-39 to PK-41) and `c
 ## Sign-off, 5 Nov 2026
 
 Hamza closed Phase 0. Carried into Phase 1: the Period Cost note (PK-41), caprolactam history before Jul 2025, the 2017–2021 data Hamza said was coming, and permission to push the cost-sheet figures to GitHub.
+
+Answers of 5 Nov 2026 to the carried points: push everything to GitHub, cost-sheet amounts included (3B). Caprolactam before Jul 2025: free public sources, footnoted, for now; buying SunSirs history is revisited in Phase 5 (2A). Period Cost: Mohsin is resubmitting his note.
