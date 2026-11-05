@@ -10,7 +10,8 @@
       "recorded_on": "2026-11-04",
       "first_hand_period": "2016-2026 (confirmed by Hamza, 2026-11-04)"
     },
-    "Final Phase 0 answers, Mohsin Ali, 5 Nov 2026 (PDF of the answer page)"
+    "Final Phase 0 answers, Mohsin Ali, 5 Nov 2026 (PDF of the answer page)",
+    "Answer page submission, Mohsin Ali, 5 Nov 2026 09:08 UTC (same choices as the PDF; full text of Q3, Q8 and the note)"
   ],
   "doc": "docs/phase0/po-knowledge.md",
   "price": {
@@ -229,9 +230,9 @@
     },
     {
       "id": "PK-41",
-      "period_cost": "for non-Sight terms, the FX difference between the cost-sheet rate and the actual payment rate is called Period Cost",
-      "whether_in_po_unit_price": "open: the respondent's note is cut off in the copy received",
-      "basis": "Q notes"
+      "period_cost": "for non-Sight terms, the FX gain or loss arises after goods are received and the PO price is updated from provisional to actual, but before the supplier is paid in foreign currency; this difference is called Period Cost",
+      "whether_in_po_unit_price": "open: Mohsin's wording suggests it is booked after the PO price is final (so outside PO_UNIT_PRICE), which conflicts with PK-32; owner decision pending; Phase 3 tests both",
+      "basis": "Mohsin, answer page submission 5 Nov 2026 09:08 UTC"
     }
   ],
   "export_complete": true,

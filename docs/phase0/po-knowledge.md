@@ -114,7 +114,7 @@ Two ERP printouts for one import consignment: an LC cost sheet (3 Nov 2026) and 
 
 ## 10. Final Phase 0 answers (Mohsin, 5 Nov 2026)
 
-Source: a PDF of the answer page Hamza sent on 5 Nov. The page did not save the answers, so this PDF is the only record. Three typed answers are partly cut off in the PDF (Q3, Q8 and the closing note); what is readable is used below.
+Source: Mohsin's submission on the answer page, 5 Nov 2026 09:08 UTC. It has the same choices as the PDF Hamza sent earlier, and gives the full text of Q3, Q8 and the closing note that were cut off in the PDF.
 
 | Q | Answer | Effect |
 | --- | --- | --- |
@@ -129,4 +129,4 @@ Source: a PDF of the answer page Hamza sent on 5 Nov. The page did not save the 
 | 9 | A: receipt 89481 is treated like the other four two-price receipts | PK-40; PK-10 applies |
 | 10 | A: **longer credit costs more** (90 days > 60 > Sight) | PK-16 direction set; Phase 3 measures it |
 | 11 | A: **CFR** for the whole period since 2016 | PK-04 holds for 2016–2026 |
-| Note | For non-Sight terms, the goods are received and the PO updated from provisional to actual cost before the supplier is paid in foreign currency; the difference is called **Period Cost** | PK-41. Whether Period Cost goes into PO_UNIT_PRICE or is expensed is not readable in the copy; until answered, PK-32 stands |
+| Note | "For exchange rate gain loss adjustment it is only done when material has already been received at the factory and Purchase order has been updated as per cost sheet from provisional to actual, but the payment to the supplier (in foreign currency) has not been made yet. It happens in cases with payment terms which are not at SIGHT basis. We also call this difference as Period Cost." | PK-41. The wording suggests the gain or loss is booked **after** the PO price is final, as Period Cost, so it may sit outside PO_UNIT_PRICE. That conflicts with PK-32 (usance lines carry the payment-date rate). Owner decision pending; Phase 3 tests both rate dates on usance lines |
