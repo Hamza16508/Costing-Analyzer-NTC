@@ -73,3 +73,27 @@ The message described the caprolactam file as 2022–2026; the file holds only J
 
 ### Answers of 5 Nov 2026 on the caprolactam file
 Unit **CNY per tonne, VAT excluded**; source **SunSirs**; repeated dates are averaged (352 daily values). The company holds no caprolactam history before Jul 2025. SunSirs sells older history at about USD 100 per 12 months of data. SBP M2M is the USD/PKR series, with USD figures kept `usd_approximate` (bank spread).
+
+## Phase 1 host test (5 Nov 2026, new environment)
+
+The environment had been created with the host list typed into its name, and its allowlist was empty, so every host still returned 403. Claude added the 21 data hosts to the allowlist (Hamza approved the change on 5 Nov). The three licensed platforms (ChemAnalyst, Volza, GlobalWits) were left off until their logins arrive. Results of a plain HTTPS request from the shell, after the change:
+
+| Host | Result | Use in Phase 1 |
+| --- | --- | --- |
+| fred.stlouisfed.org | **works** (CSV endpoint) | US CPI-U, USD/CNY, Brent, PPI aromatics loaded |
+| comtradeapi.un.org | **works** (public preview API, one period per call, no key) | China caprolactam import, China and Pakistan tyre cord unit values |
+| www.stats.gov.cn | **works** (occasional connection resets; retried) | NBS 10-day benzene, Nov 2021 onward (the current site lists nothing older) |
+| www.pbs.gov.pk | **works** | National CPI from the historical-indices PDF and monthly reviews |
+| en.sse.net.cn | **works** for the current week; history needs a subscriber login | SCFI latest weeks (primary) |
+| raw.githubusercontent.com | **works** | SCFI weekly history (third-party compilation) |
+| www.cninfo.com.cn, static.cninfo.com.cn | works | Haiyang filings (not loaded yet) |
+| www.cs.com.cn | works | copies of older NBS releases |
+| data.gdeltproject.org | works (empty root page) | events, Phase 2 |
+| comtradeplus.un.org | works | registration page for the free key |
+| **sunsirs.com, www.sunsirs.com, www.100ppi.com** | **blocked: security-check page** (JavaScript cookie challenge) | login asked from Hamza (clearing-round rule 2A) |
+| **www.sbp.org.pk, archive.sbp.org.pk, easydata.sbp.org.pk** | **blocked: Cloudflare "Attention Required"** | not needed: Hamza's SBP M2M file covers every PO date |
+| **stats.customs.gov.cn, english.customs.gov.cn** | **connection reset** | replaced by UN Comtrade (remedy 4A) |
+| api.eia.gov | reachable, needs a free API key | not needed: Brent comes from FRED |
+| api.stlouisfed.org | redirects to research.stlouisfed.org, which is not on the allowlist | not needed: the CSV endpoint works |
+| api.gdeltproject.org | connection reset | Phase 2 |
+| www.chemanalyst.com, www.volza.com, www.globalwits.com | not on the allowlist | pending credentials |

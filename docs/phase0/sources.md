@@ -61,3 +61,25 @@ Every source shown in a report, doc or page is cited as a footnote with its link
 
 - A continuous daily or weekly caprolactam price from Oct 2016 that can be read automatically. SunSirs is the best candidate, followed by customs unit values (monthly) and ChemAnalyst (licensed).
 - Competitor raw-material prices at importer level: GlobalWits or Volza only.
+
+## Phase 1 sources as loaded (5 Nov 2026)
+
+Every value in the analyzer database carries its own `source_link`, `retrieved_at`, `unit` and `source_tier`. The table lists where each series came from; the coverage is in `docs/phase1/gate1-report.md`.
+
+| Series id | Source | Tier | Notes |
+| --- | --- | --- | --- |
+| `sunsirs.cpl_china` | Hamza's file `Cap Data with Currency rate.xlsx` (SunSirs, CNY/t VAT excluded) | company_supplied | Jul 2025 – Nov 2026, daily, repeated dates averaged |
+| `comtrade.cn_import_uv.293371` | UN Comtrade public preview API, China imports of HS 2933.71[^ct] | primary | Monthly USD/t (CIF value ÷ net weight). **2016 is dropped**: every 2016 month carries the same unit value (1,455.94 USD/t), an annual figure spread over months. **Ends Dec 2024**: Comtrade has no China monthly data for 2025–26 yet |
+| `comtrade.cn_export_uv.590210`, `comtrade.pk_import_uv.590210` | UN Comtrade, HS 5902.10 | primary | Market benchmarks for nylon tyre cord, not factors |
+| `nbs.benzene_10day` | NBS 10-day releases on www.stats.gov.cn/sj/zxfb/[^nbs] | primary | Nov 2021 onward. Older releases (2016 – Oct 2021) are no longer listed on the NBS site; single copies exist (NBS English site, gov.cn, Chongqing statistics bureau, chinadaily) but there is no list to read them from |
+| `scfi.composite` | GYUL91 shipping-indicators compilation (Korea NLIC data)[^scfi]; latest two weeks from SSE itself | third_party (history), primary (latest) | SSE's own history query needs a subscriber login. The compilation matches SSE on both weeks checked (3,687.35 and 3,681.34) |
+| `sbp_m2m.usd_pkr`, `sbp_m2m.cny_pkr` | Hamza's file `SBP M2M Exch Rates Jul 2015 till date.xlsx` | company_supplied | SBP's own site blocks automated access (Cloudflare); not needed |
+| `pbs.cpi_national` | PBS "Historical indices and growth rates 2015-16"[^pbsh] and Monthly Reviews Jul–Oct 2026[^pbsm] | primary | Monthly from Jul 2017. **Oct 2016 – Jun 2017 missing**: the PBS table gives only the FY2016-17 average, and no third-party copy was found |
+| `fred.cpiaucns` | FRED CSV | primary | Oct 2025 blank in FRED (not published); stored as missing |
+| `fred.dexchus`, `fred.dcoilbrenteu`, `fred.wpu06140197` | FRED CSV | primary | Cross-checks and event work; not in the v0.1-ci weights |
+
+[^ct]: https://comtradeapi.un.org/public/v1/preview/C/M/HS (queried 5 Nov 2026; each value links its own query).
+[^nbs]: https://www.stats.gov.cn/sj/zxfb/ (list read 5 Nov 2026; each value links its release).
+[^scfi]: https://raw.githubusercontent.com/GYUL91/shipping-indicators-dashboard/master/docs/data/all.json (read 5 Nov 2026); SSE: https://en.sse.net.cn/indices/scfinew.jsp.
+[^pbsh]: https://www.pbs.gov.pk/wp-content/uploads/2020/07/indices_and_growth_rates_historical-1.pdf (read 5 Nov 2026).
+[^pbsm]: e.g. https://www.pbs.gov.pk/wp-content/uploads/2020/07/Monthly-Review-October2026.pdf (read 5 Nov 2026).

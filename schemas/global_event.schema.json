@@ -1,0 +1,185 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://costing-analyzer.local/schemas/0.2/global_event.schema.json",
+  "title": "Global event",
+  "description": "A dated global event. Impact is learned from history, never judged.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "applies_on",
+    "source",
+    "event_id",
+    "title",
+    "start_date",
+    "end_date",
+    "first_reported_at",
+    "event_type",
+    "region",
+    "affected_factor_ids",
+    "learned_impact",
+    "sources"
+  ],
+  "properties": {
+    "record_type": {
+      "const": "global_event"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "applies_on": {
+      "type": "string",
+      "format": "date",
+      "description": "The date this record applies to; drives every point-in-time check."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "retrieved_at"
+      ],
+      "properties": {
+        "link": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "event_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$"
+    },
+    "title": {
+      "type": "string"
+    },
+    "start_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "end_date": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date"
+    },
+    "first_reported_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "event_type": {
+      "enum": [
+        "weather",
+        "disease",
+        "conflict",
+        "sanctions",
+        "trade_policy",
+        "plant_outage",
+        "shipping_disruption",
+        "fx_shock",
+        "demand_shock",
+        "supply_policy",
+        "capacity_cycle"
+      ]
+    },
+    "region": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "affected_factor_ids": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "learned_impact": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "as_of",
+          "value",
+          "method_version",
+          "n_cases"
+        ],
+        "properties": {
+          "as_of": {
+            "type": "string",
+            "format": "date"
+          },
+          "value": {
+            "type": [
+              "number",
+              "null"
+            ]
+          },
+          "method_version": {
+            "type": "string"
+          },
+          "n_cases": {
+            "type": "integer",
+            "minimum": 0
+          }
+        }
+      }
+    },
+    "sources": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "link",
+          "retrieved_at"
+        ],
+        "properties": {
+          "link": {
+            "type": "string",
+            "format": "uri"
+          },
+          "publisher": {
+            "type": [
+              "string",
+              "null"
+            ]
+          },
+          "published_at": {
+            "type": [
+              "string",
+              "null"
+            ],
+            "format": "date-time"
+          },
+          "retrieved_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      }
+    },
+    "judged_metadata": {
+      "type": "object",
+      "description": "Causal Identifier judged fields (dir, dirBasis, severity, relevant, channels, category, why, note, addedBy). Metadata only; never used by the engine."
+    }
+  }
+}
