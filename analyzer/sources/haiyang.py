@@ -35,7 +35,7 @@ def records(retrieved_at):
     for y, q, v, pub in VALUES:
         m0 = 3 * q - 2
         out.append(factor.value(SID, f"{y}-{m0:02d}-01", factor.month_end(y, m0 + 2), v, "CNY/t", "CNY",
-                                source_name="Haiyang Technology quarterly operating data (SSE 603382)",
+                                source_name="Haiyang Technology quarterly operating data (SSE 603382), avg purchase price ex VAT",
                                 link=PDF[pub], retrieved_at=retrieved_at, tier="primary",
-                                published_at=pub, tag="avg purchase price, VAT excluded"))
+                                published_at=pub))
     return out

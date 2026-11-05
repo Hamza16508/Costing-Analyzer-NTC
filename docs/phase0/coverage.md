@@ -86,7 +86,7 @@ The environment had been created with the host list typed into its name, and its
 | www.pbs.gov.pk | **works** | National CPI from the historical-indices PDF and monthly reviews |
 | en.sse.net.cn | **works** for the current week; history needs a subscriber login | SCFI latest weeks (primary) |
 | raw.githubusercontent.com | **works** | SCFI weekly history (third-party compilation) |
-| www.cninfo.com.cn, static.cninfo.com.cn | works | Haiyang filings (not loaded yet) |
+| www.cninfo.com.cn, static.cninfo.com.cn | works | Haiyang filings (the 2025–26 quarterly figures were read from the SSE copies, static.sse.com.cn) |
 | www.cs.com.cn | works | copies of older NBS releases |
 | data.gdeltproject.org | works (empty root page) | events, Phase 2 |
 | comtradeplus.un.org | works | registration page for the free key |
