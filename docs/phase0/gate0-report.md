@@ -74,3 +74,7 @@ The filled questionnaire (Mohsin Ali) is recorded as po-knowledge.md and `config
 ## Sign-off requested
 
 From the owner and the host team: the six contracts, the v1 method (decisions.md) and the breakdown output record.
+
+## Final answers, 5 Nov 2026
+
+Mohsin's final answers are in po-knowledge.md section 10 (PK-39 to PK-41) and `config/po_knowledge.json` v1.2.0. Every PO follow-up is answered. Still open: the Period Cost note (cut off in the copy), caprolactam history before Jul 2025 (paid SunSirs purchase or free sources), permission to push the cost-sheet figures, and Gate 0 sign-off.

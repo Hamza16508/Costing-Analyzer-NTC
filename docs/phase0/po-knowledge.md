@@ -111,3 +111,22 @@ Two ERP printouts for one import consignment: an LC cost sheet (3 Nov 2026) and 
 | PK-36 | The duty-type levy on this consignment is the **Sindh Infrastructure Cess (~1.86% of LC value)**. No customs, additional or regulatory duty lines appear, consistent with customs duty at 0% (PK-15). Whether nylon cord (PCT 5902.1000) also carries ACD or RD is not shown, since this is a different HS code. | Cost sheet; follow-up Q2 partly answered |
 | PK-37 | Charges are booked over time as journal vouchers against the LC account (D/O, wharfage, cess, stamps, excise processing). Some are still unposted when the cost sheet is printed. The landed cost settles once these are posted, which is why early prices can be provisional (PK-08, PK-09). | LC account statement |
 | PK-38 | On this consignment, the **supplier's price is about 95% of landed cost**, and cess, port, bank and inland charges about 5%. The analyzer uses this as a sanity check only: weights still come from the factor definitions (decision 6). | Cost sheet (one consignment; indicative only) |
+
+## 10. Final Phase 0 answers (Mohsin, 5 Nov 2026)
+
+Source: a PDF of the answer page Hamza sent on 5 Nov. The page did not save the answers, so this PDF is the only record. Three typed answers are partly cut off in the PDF (Q3, Q8 and the closing note); what is readable is used below.
+
+| Q | Answer | Effect |
+| --- | --- | --- |
+| 1 | B: CNY per tonne, **VAT excluded** | caprolactam file unit fixed |
+| 2 | A: **SunSirs** | caprolactam source; `source_tier = company_supplied` |
+| 3 | E: the company holds SunSirs data only from **Jul 2025** (one year subscribed, then recorded daily from the site). Older history is a **paid SunSirs purchase, about USD 100 per 12 months of data** | 2016 – Jun 2025 caprolactam stays open (see the open points below) |
+| 4 | A: the **average** of a day's prices | 55 repeated dates averaged |
+| 5 | E (= B): SBP M2M can stand in, but **USD figures stay approximate**, because banks add their spread to the SBP rate | `usd_approximate` kept; PK-06 confirmed |
+| 6 | D: **no duty** on PCT 5902.1000 | customs, additional and regulatory duty 0; PK-15, PK-36 confirmed. The Sindh Infrastructure Cess seen on the chemicals cost sheet is not confirmed for nylon cord |
+| 7 | E: "Option D, duty and all taxes are **0% under EFS**" | read as 0% duty and tax on EFS lines (the text overrides the ticked option D, "Both"). PK-23 stays: Phase 3 tests the price effect |
+| 8 | E: while the cost sheet is being processed, the price is corrected **on the same line** (provisional PO). Once the cost-sheet price is final, a change needs **special approval from the accounts department** | PK-39; refines PK-08 |
+| 9 | A: receipt 89481 is treated like the other four two-price receipts | PK-40; PK-10 applies |
+| 10 | A: **longer credit costs more** (90 days > 60 > Sight) | PK-16 direction set; Phase 3 measures it |
+| 11 | A: **CFR** for the whole period since 2016 | PK-04 holds for 2016–2026 |
+| Note | For non-Sight terms, the goods are received and the PO updated from provisional to actual cost before the supplier is paid in foreign currency; the difference is called **Period Cost** | PK-41. Whether Period Cost goes into PO_UNIT_PRICE or is expensed is not readable in the copy; until answered, PK-32 stands |

@@ -1,14 +1,17 @@
 {
   "record_type": "po_knowledge",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "material_scope": "nylon tyre cord",
-  "source": {
-    "name": "PO questionnaire, Mohsin Ali (Deputy Manager Commercial, until Jan 2024)",
-    "file": "docs/phase0/questionnaire/NTC-PO-Questionnaire-filled-2026-11-03.docx",
-    "answered_on": "2026-11-03",
-    "recorded_on": "2026-11-04",
-    "first_hand_period": "2016-2026 (confirmed by Hamza, 2026-11-04)"
-  },
+  "source": [
+    {
+      "name": "PO questionnaire, Mohsin Ali (Deputy Manager Commercial, until Jan 2024)",
+      "file": "docs/phase0/questionnaire/NTC-PO-Questionnaire-filled-2026-11-03.docx",
+      "answered_on": "2026-11-03",
+      "recorded_on": "2026-11-04",
+      "first_hand_period": "2016-2026 (confirmed by Hamza, 2026-11-04)"
+    },
+    "Final Phase 0 answers, Mohsin Ali, 5 Nov 2026 (PDF of the answer page)"
+  ],
   "doc": "docs/phase0/po-knowledge.md",
   "price": {
     "basis": "landed_cost",
@@ -32,7 +35,7 @@
   "fx": {
     "in_price": "negotiated_bank_rate_at_BL_payment",
     "duty_rate": "PSW_WeBOC_official",
-    "public_proxy": "sbp.bfer_daily.usd",
+    "public_proxy": "sbp_m2m.usd_pkr (company-supplied file)",
     "proxy_flag": "usd_approximate",
     "usance_gain_loss": {
       "applies_to_terms": [
@@ -44,7 +47,11 @@
       "rate_date": "transaction_date_plus_credit_days",
       "flag": "usance_fx",
       "source": "Hamza 2026-11-04 (PK-32)"
-    }
+    },
+    "sbp_m2m_as_proxy": true,
+    "usd_flag": "usd_approximate",
+    "reason": "banks add their spread to the SBP rate before settlement (Q5 = B)",
+    "series": "SBP M2M, company-supplied file, 2015-07-02 to 2026-11-03"
   },
   "invoice_currency_share": {
     "USD": [
@@ -81,9 +88,19 @@
   "customs_duty": {
     "pct_5902_1000_cd_rate": 0.0,
     "treatment": "normal",
-    "constant_within_po": true
+    "constant_within_po": true,
+    "pct_5902_1000": "none",
+    "customs_duty": 0,
+    "additional_customs_duty": 0,
+    "regulatory_duty": 0,
+    "sindh_infrastructure_cess_on_ntc": "unconfirmed",
+    "basis": "Mohsin, final Phase 0 answers 5 Nov 2026 (Q6 = D)"
   },
-  "payment_terms_affect_price": true,
+  "payment_terms_affect_price": {
+    "value": true,
+    "direction": "longer credit costs more: 90 days > 60 days > Sight",
+    "basis": "Q10 = A"
+  },
   "rules": [
     {
       "id": "PK-09",
@@ -197,6 +214,24 @@
       "id": "PK-35",
       "freight_charges": "record_of_inland_freight_already_in_price",
       "never_add": true
+    },
+    {
+      "id": "PK-39",
+      "price_corrections": "same_line_while_provisional",
+      "lock": "after cost sheet is finalised; change needs special approval from the accounts department",
+      "basis": "Q8"
+    },
+    {
+      "id": "PK-40",
+      "receipt": "89481",
+      "treatment": "same as PK-10",
+      "basis": "Q9 = A"
+    },
+    {
+      "id": "PK-41",
+      "period_cost": "for non-Sight terms, the FX difference between the cost-sheet rate and the actual payment rate is called Period Cost",
+      "whether_in_po_unit_price": "open: the respondent's note is cut off in the copy received",
+      "basis": "Q notes"
     }
   ],
   "export_complete": true,
@@ -236,5 +271,22 @@
     "inland_freight": 0.018,
     "port_bank_clearing": 0.009,
     "basis": "one rubber-chemicals consignment; sanity check only"
+  },
+  "efs": {
+    "duty_pct": 0,
+    "all_taxes_pct": 0,
+    "basis": "Q7: 'Duty and all taxes are 0% under EFS'"
+  },
+  "delivery_term": {
+    "value": "CFR",
+    "period": "2016-2026",
+    "basis": "Q11 = A"
+  },
+  "caprolactam_file": {
+    "unit": "CNY per tonne, VAT excluded",
+    "source": "SunSirs",
+    "duplicate_dates": "average per day",
+    "history": "company holds SunSirs data from Jul 2025 only; older history is a paid SunSirs purchase, about USD 100 per 12 months of data",
+    "basis": "Q1 = B, Q2 = A, Q3 = E, Q4 = A"
   }
 }

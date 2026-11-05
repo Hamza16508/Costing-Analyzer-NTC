@@ -70,3 +70,6 @@ Files from Hamza, kept in the project folder only (company data, not in the repo
 The message described the caprolactam file as 2022–2026; the file holds only Jul 2025 – Nov 2026. 2017–2021 is promised for later today.
 
 `NTC-PO-Questionnaire 1.docx` has the same text as the filled questionnaire of 3 Nov (checked line by line): no new answers.
+
+### Answers of 5 Nov 2026 on the caprolactam file
+Unit **CNY per tonne, VAT excluded**; source **SunSirs**; repeated dates are averaged (352 daily values). The company holds no caprolactam history before Jul 2025. SunSirs sells older history at about USD 100 per 12 months of data. SBP M2M is the USD/PKR series, with USD figures kept `usd_approximate` (bank spread).
