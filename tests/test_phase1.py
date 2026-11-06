@@ -70,3 +70,19 @@ def test_flat_comtrade_year_dropped():
     recs += [{"period_start": "2017-01-01", "value": 2057.9, "status": "ok", "retrieved_at": "x", "source_link": "u"}]
     out = drop_flat_years(recs)
     assert [r["status"] for r in out] == ["missing"] * 4 + ["ok"]
+
+
+FCL_CSV = os.environ.get("NTC_FCL_CSV")
+
+
+@pytest.mark.skipif(not FCL_CSV, reason="set NTC_FCL_CSV to the digitized FCL chart")
+def test_fcl_chart_digitized():
+    from analyzer.sources import company_files as cf
+    assert cf.fcl_ma_check(FCL_CSV) == []
+    recs = cf.fcl_china_weekly(FCL_CSV)
+    v = jsonschema.Draft202012Validator(json.loads((ROOT / "schemas/factor_value.schema.json").read_text()))
+    assert not [e.message for r in recs for e in v.iter_errors({k: x for k, x in r.items() if k != "raw"})]
+    by = {r["period_start"]: r["value"] for r in recs}
+    assert by["2026-08-31"] == 4225  # 2026 wk36 peak
+    assert by["2025-01-27"] is None  # 2025 wk5: no bar
+    assert len(recs) == 52 + 44

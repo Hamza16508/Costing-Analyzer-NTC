@@ -36,6 +36,7 @@ SERIES_META = {
     "nbs.benzene_10day": ("Benzene, China 10-day market price (NBS)", "10D"),
     "fred.wpu06140197": ("US PPI aromatics (benzene cross-check)", "M"),
     "scfi.composite": ("Container freight, SCFI composite", "W"),
+    "ntc_fcl.china_ports": ("Freight per FCL from Chinese ports, 2025-26 (company chart, digitized)", "W"),
     "sbp_m2m.usd_pkr": ("USD/PKR, SBP M2M (company file)", "D"),
     "sbp_m2m.cny_pkr": ("CNY/PKR, SBP M2M (company file)", "D"),
     "fred.dexchus": ("USD/CNY, FRED H.10", "D"),
