@@ -54,6 +54,7 @@ The Causal Identifier artifact was only read, never written.
 | Benzene, China 10-day market price (NBS) | CNY/t | primary | 172 / 172 | 2021-11 | 2026-10 |
 | US PPI aromatics (benzene cross-check, FRED) | index | primary | 135 / 135 | 2015-07 | 2026-09 |
 | Container freight, SCFI composite | index | third party + primary | 545 / 545 weeks | 2016-01-08 | 2026-10-30 |
+| Freight per FCL from Chinese ports (Hamza's chart, digitized) | USD per FCL | company | 88 / 96 weeks | 2024-12-30 | 2026-10-26 |
 | USD/PKR, SBP M2M (company file) | PKR per USD | company | 2,788 days | 2015-07-02 | 2026-11-03 |
 | CNY/PKR, SBP M2M (company file) | PKR per CNY | company | 2,788 days | 2015-07-02 | 2026-11-03 |
 | USD/CNY, FRED H.10 | CNY per USD | primary | 2,832 / 2,958 | 2015-07-01 | 2026-10-30 |
@@ -66,6 +67,7 @@ The Causal Identifier artifact was only read, never written.
 Notes:
 - Comtrade's China rows for 2016 carry one flat value in every month (an annual figure spread over months), so 2016 is stored as missing. China has not reported 2025–26 yet.
 - SCFI history comes from the GYUL91 compilation on GitHub (third party); the SSE site gives only the latest weeks without a login. The two agree on the overlapping weeks (3,687.35 and 3,681.34).
+- The FCL series (`ntc_fcl.china_ports`) is the only China-to-Pakistan lane data in the databank. It was digitized from Hamza's chart "FCL Movement - Chinese Ports" (6 Nov 2026); the chart's own 4-week moving average reproduces from the digitized bars on all 44 weeks of 2026. Weeks with no shipment are stored as missing. It covers only 2025–26, so SCFI stays the freight factor for base months. Details: `docs/phase1/freight-fcl-china.md`.
 - The current NBS site lists releases from Nov 2021 only. Benzene is not in the v0.1-ci weights.
 - The Haiyang values are dated by the announcement in which they were read. A comparative figure (for example 2025 Q1, read in the 2026 Q1 report) carries the later date.
 
@@ -88,7 +90,8 @@ The binding gap for five constructions is PBS CPI before Jul 2017 (PBS's histori
 
 - The PO export carries no FOB, CFR or CIF term in any field. Mohsin's questionnaire answer (Q11) is CFR throughout.
 - FREIGHT_CHARGES holds inland freight only: its median share of the landed price is 0.8–1.7% a year. It is filled on ~95% of import lines in 2016–2020 and on ~2% in 2026, so blank lines are flagged `freight_in_price`.
-- Comparison documents (a CFR invoice next to its freight bill, or a FOB quote) are needed to estimate the ocean-freight share. Asked from Hamza.
+- Ocean freight on the lane, from the FCL chart: about $1,000–1,500 per FCL through most of 2025 and $3,800–4,200 in Sep–Oct 2026. At about 18 t of cord per FCL that is roughly 3% of landed cost in 2025 and 8% at the 2026 peak. Container size and whether the figure is all-in are still to be confirmed.
+- Comparison documents (a CFR invoice next to its freight bill, or a FOB quote) are still needed to prove the supplier passes freight through. Asked from Hamza.
 
 ## 5. Mill-country search
 
@@ -98,6 +101,6 @@ See `docs/phase0/origin-table.md`, Phase 1 section. G.T. Trading resolved from g
 
 1. **SunSirs login** (or a 100ppi login): the site blocks automated access. Without it, caprolactam for Jan 2025 to Jun 2025 rests on the Haiyang quarterly figures only.
 2. **PBS CPI for Oct 2016 to Jun 2017**: back-calculate from PBS's published year-on-year rates, keep looking for a copy, or leave it missing (base months stay in Jul–Aug 2017).
-3. **FOB/CFR comparison documents** for the ocean-freight share.
+3. **FOB/CFR comparison documents** for the ocean-freight share, and for the FCL chart: 20ft or 40ft, base or all-in, and the weekly table for earlier years if the logistics team keeps one.
 4. **Which caprolactam series is primary**: Comtrade (monthly, ends Dec 2024) or the SunSirs file (daily, from Jul 2025), and whether to chain-link them through the Haiyang quarters.
 5. **Free UN Comtrade key** (`COMTRADE_API_KEY` in `.env`) for faster, complete Comtrade pulls; the public preview works without one.
