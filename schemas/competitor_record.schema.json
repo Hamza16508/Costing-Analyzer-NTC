@@ -1,0 +1,155 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://costing-analyzer.local/schemas/0.2/competitor_record.schema.json",
+  "title": "Competitor record",
+  "description": "A competitor's raw-material purchase price (e.g. a customs import record). Tyre selling prices and the owner's purchases from other tyre makers are not competitor records.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "record_type",
+    "schema_version",
+    "applies_on",
+    "source",
+    "competitor_id",
+    "scope",
+    "price_type",
+    "record_date",
+    "material_key",
+    "price",
+    "currency",
+    "unit",
+    "source_link",
+    "retrieved_at",
+    "present_fields"
+  ],
+  "properties": {
+    "record_type": {
+      "const": "competitor_record"
+    },
+    "schema_version": {
+      "const": "0.2"
+    },
+    "applies_on": {
+      "type": "string",
+      "format": "date",
+      "description": "The date this record applies to; drives every point-in-time check."
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "retrieved_at"
+      ],
+      "properties": {
+        "link": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "uri"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retrieved_at": {
+          "type": "string",
+          "format": "date-time"
+        }
+      }
+    },
+    "competitor_id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9-]*$",
+      "description": "Key into the competitor registry (config/competitors), which holds aliases, e.g. general-tyre = General Tyre / Ghandhara Tyre and Rubber."
+    },
+    "scope": {
+      "enum": [
+        "local",
+        "global"
+      ]
+    },
+    "price_type": {
+      "const": "raw_material_purchase"
+    },
+    "record_date": {
+      "type": "string",
+      "format": "date"
+    },
+    "material_key": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_./-]*$",
+      "description": "Material key as read from ITEM_DESCRIPTION. Nylon cord v0.1: 840D/2, 1260D/2, 840D/1, 1890D/2, 1260D/1, chafer. Database doc ids use a slug with / replaced by - (840D-2)."
+    },
+    "price": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "currency": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^[A-Z]{3}$"
+    },
+    "unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "quantity": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "quantity_unit": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "incoterm": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "origin_country": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "hs_code": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "pattern": "^\\d{4,10}$"
+    },
+    "source_link": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "retrieved_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "present_fields": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      },
+      "description": "Fields actually present in the source; partial rows allowed."
+    }
+  }
+}

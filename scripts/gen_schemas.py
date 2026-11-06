@@ -1,7 +1,13 @@
-"""Generates the six Phase 0 contract schemas (JSON Schema 2020-12, draft 0.1). Design artefact only."""
+"""Generates the six contract schemas (JSON Schema 2020-12), version 0.2 (Phase 1) into schemas/.
+
+0.2 changes from 0.1 (docs/phase0/schemas, kept as the signed Gate 0 snapshot):
+- purchase_record: `epi` sub-key (PK-25); flag `missing_lc_number` (PK-22); origin_basis adds `verified_source`, `not_applicable`.
+- factor_value: source_tier adds `company_supplied` (Hamza's SBP M2M and SunSirs caprolactam files).
+"""
 import json, pathlib
-OUT = pathlib.Path(__file__).resolve().parent.parent / "docs/phase0/schemas"
-BASE = "https://costing-analyzer.local/schemas/0.1/"
+OUT = pathlib.Path(__file__).resolve().parent.parent / "schemas"
+OUT.mkdir(exist_ok=True)
+BASE = "https://costing-analyzer.local/schemas/0.2/"
 DATE = {"type": "string", "format": "date"}
 DT = {"type": "string", "format": "date-time"}
 URI = {"type": "string", "format": "uri"}
@@ -18,11 +24,11 @@ def common(record_type, extra_required, props, desc):
             "title": record_type.replace("_", " ").capitalize(), "description": desc, "type": "object",
             "additionalProperties": False,
             "required": ["record_type", "schema_version", "applies_on", "source"] + extra_required,
-            "properties": {"record_type": {"const": record_type}, "schema_version": {"const": "0.1"},
+            "properties": {"record_type": {"const": record_type}, "schema_version": {"const": "0.2"},
                            "applies_on": {**DATE, "description": "The date this record applies to; drives every point-in-time check."},
                            "source": SOURCE, **props}}
 
-PURCHASE_FLAGS = ["excluded_from_pricing", "excluded_from_volume", "intercompany", "provisional_duplicate", "identical_line", "code_description_conflict", "duplicate_entry", "provisional_price", "efs_import", "freight_in_price", "usance_fx"]
+PURCHASE_FLAGS = ["excluded_from_pricing", "excluded_from_volume", "intercompany", "provisional_duplicate", "identical_line", "code_description_conflict", "duplicate_entry", "provisional_price", "efs_import", "freight_in_price", "usance_fx", "missing_lc_number"]
 purchase = common("purchase_record", ["purchase_id", "po_number", "material_code", "material_name", "material_key", "purchase_date", "quantity", "quantity_unit", "currency", "unit_price", "total_price", "supplier", "import_or_local", "category", "flags", "raw", "origin"], {
     "purchase_id": {"type": "string", "pattern": r"^\d+:[^:]+:\d+$", "description": "RECEIPT_NUM:ITEM_CODE:n, n = 1-based order of the line within that receipt and item in file order."},
     "po_number": {"type": "string"}, "po_header_id": {"type": ["string", "null"]}, "lc_number": {"type": ["string", "null"]},
@@ -33,7 +39,8 @@ purchase = common("purchase_record", ["purchase_id", "po_number", "material_code
     "currency": {"const": "PKR"}, "unit_price": {"type": "number", "minimum": 0}, "total_price": {"type": "number", "minimum": 0},
     "supplier": {"type": "string"}, "vendor_site": {"type": ["string", "null"]},
     "origin_region": {"type": ["string", "null"], "description": "Mill country; null until the vendor-to-origin table is confirmed for traders."},
-    "origin_basis": {"enum": ["vendor_name", "confirmed_table", "unknown"]},
+    "origin_basis": {"enum": ["vendor_name", "confirmed_table", "verified_source", "not_applicable", "unknown"]},
+    "epi": {"type": ["integer", "null"], "description": "Ends per inch read from ITEM_DESCRIPTION; material sub-key (PK-25)."},
     "import_or_local": {"enum": ["IMPORT", "LOCAL"]}, "delivery_terms": {"type": ["string", "null"]}, "payment_terms": {"type": ["string", "null"]},
     "freight_per_receipt": {**NUM_OR_NULL, "description": "PKR per receipt, repeated on each line of the receipt. Never sum across lines."},
     "bilty_no": {"type": ["string", "null"]}, "vehicle_num": {"type": ["string", "null"]},
@@ -68,7 +75,7 @@ series = common("factor_value", ["series_id", "period_start", "period_end", "val
     "source_link": {"type": ["string", "null"], "format": "uri"}, "retrieved_at": DT,
     "published_at": {"type": ["string", "null"], "format": "date-time", "description": "When the value was first public; null if unknown. Used by the stricter 'known by then' mode."},
     "vintage": {"type": "string", "description": "Revision label. A revision is a new record with a new vintage, never an overwrite."},
-    "source_tier": {"enum": ["primary", "third_party"], "description": "primary = the publisher itself; third_party = a copy held by someone else (e.g. the PBS CPI 2016-2019 copy, decision Q6, provisional)."},
+    "source_tier": {"enum": ["primary", "third_party", "company_supplied"], "description": "primary = the publisher itself; third_party = a copy held by someone else (e.g. the PBS CPI 2016-2019 copy); company_supplied = a file from the owner (SBP M2M rates, SunSirs caprolactam)."},
     "tag": {"enum": ["V", "S", "A", None], "description": "Carried from the Causal Identifier: V verified, S snippet, A approximate. Only V (or new records with status ok) are usable."}},
     "One observation of one series for one period. applies_on = period_start.")
 series["allOf"] = [

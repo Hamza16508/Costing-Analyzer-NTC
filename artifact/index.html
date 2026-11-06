@@ -1,0 +1,125 @@
+<title>NTC Costing Analyzer</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,600&display=swap">
+<style>
+/* Layout: one reading column; a ledger header, then the databank's three registers (purchases, factor series, base months) as tables. */
+:root {
+  --bg: #f6f7f5; --surface: #ffffff; --fg: #1d2420; --muted: #5d6a63; --line: #d9dfdb;
+  --accent: #1f6b57; --accent-soft: #e2efe9; --warn: #9a5b0b; --warn-soft: #f7ecd9; --bad: #a3322a; --bad-soft: #f7e1de;
+  --display: "Fraunces", Georgia, serif; --body: "IBM Plex Sans", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #121614; --surface: #1a201d; --fg: #e4ebe7; --muted: #9aa8a0; --line: #2c3530;
+  --accent: #6cc3a6; --accent-soft: #1d3029; --warn: #e3a85a; --warn-soft: #33281a; --bad: #ef8a80; --bad-soft: #3a2120; color-scheme: dark } }
+:root[data-theme="dark"] {
+  --bg: #121614; --surface: #1a201d; --fg: #e4ebe7; --muted: #9aa8a0; --line: #2c3530;
+  --accent: #6cc3a6; --accent-soft: #1d3029; --warn: #e3a85a; --warn-soft: #33281a; --bad: #ef8a80; --bad-soft: #3a2120; color-scheme: dark }
+body { background: var(--bg); color: var(--fg); font: 15px/1.5 var(--body); }
+.wrap { max-width: 1040px; margin: 0 auto; padding-block: 28px 48px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); display: grid; gap: 32px; }
+header { display: grid; gap: 6px; }
+.eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+h1 { font: 600 clamp(26px, 4vw, 36px)/1.15 var(--display); margin: 0; text-wrap: balance; }
+h2 { font: 600 20px/1.2 var(--display); margin: 0; }
+p { margin: 0; max-width: 68ch; }
+.muted { color: var(--muted); }
+.stats { display: flex; flex-wrap: wrap; gap: 10px 28px; margin-top: 8px; }
+.stat b { display: block; font: 500 22px/1.2 var(--mono); font-variant-numeric: tabular-nums; }
+.stat span { font-size: 13px; color: var(--muted); }
+section { display: grid; gap: 12px; min-width: 0; }
+.tbl { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; font-size: 13.5px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; white-space: nowrap; }
+th { font: 500 11.5px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--muted); }
+tr:last-child td { border-bottom: 0; }
+td.num { text-align: right; font-family: var(--mono); font-variant-numeric: tabular-nums; }
+td.wrap { white-space: normal; min-width: 220px; }
+code, .mono { font-family: var(--mono); font-size: 12.5px; }
+.pill { display: inline-block; padding: 1px 8px; border-radius: 999px; font: 500 11.5px/1.6 var(--mono); }
+.ok { background: var(--accent-soft); color: var(--accent); }
+.partial { background: var(--warn-soft); color: var(--warn); }
+.none { background: var(--bad-soft); color: var(--bad); }
+a { color: var(--accent); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.empty { padding: 16px; background: var(--surface); border: 1px dashed var(--line); border-radius: 6px; color: var(--muted); }
+footer { font-size: 13px; color: var(--muted); }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Nylon tyre cord · raw-material costing</div>
+    <h1>NTC Costing Analyzer</h1>
+    <p class="muted">The analyzer's own databank: cleaned purchase history and dated factor series. Every value carries its source link, unit and retrieval time. Separate from the Causal Identifier, which is never changed.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <section>
+    <h2>Purchases by construction</h2>
+    <p class="muted">ERP PO export, Oct 2016 to Oct 2026. Price is landed cost in PKR per kg. Lines flagged as provisional, duplicate or intercompany are kept in the record but left out of pricing.</p>
+    <div id="po" class="empty">Loading purchase summary…</div>
+  </section>
+
+  <section>
+    <h2>Factor series</h2>
+    <p class="muted">Coverage counts the periods with a value. Tier: primary is the publisher itself, third party is a copy held elsewhere, company is a file from the owner.</p>
+    <div id="series" class="empty">Loading factor series…</div>
+  </section>
+
+  <section>
+    <h2>Base month per construction</h2>
+    <p class="muted">First month with a purchase and full verified coverage of the factors, not earlier than Oct 2016.</p>
+    <div id="base" class="empty">Loading base months…</div>
+  </section>
+
+  <footer id="foot">Data appears here once the databank is loaded.</footer>
+</div>
+
+<script>
+const fmt = (n, d = 0) => n == null ? "–" : Number(n).toLocaleString("en-US", { minimumFractionDigits: d, maximumFractionDigits: d });
+const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+function table(head, rows) {
+  return `<table><thead><tr>${head.map(h => `<th>${h}</th>`).join("")}</tr></thead><tbody>${rows.join("")}</tbody></table>`;
+}
+function setBox(id, html, isEmpty) {
+  const el = document.getElementById(id);
+  el.className = isEmpty ? "empty" : "tbl";
+  el.innerHTML = html;
+}
+function render(s) {
+  const p = s.po || {};
+  document.getElementById("stats").innerHTML = [
+    [fmt(p.lines), "PO lines"], [fmt(p.kg), "kg delivered"], [fmt(p.priced_lines), "lines priced"],
+    [fmt((s.series || []).length), "factor series"]
+  ].map(([b, t]) => `<div class="stat"><b>${b}</b><span>${t}</span></div>`).join("");
+  setBox("po", table(["Construction", "Lines", "kg", "Priced", "First", "Last", "Median 2026 PKR/kg"],
+    (p.by_key || []).map(k => `<tr><td><b>${esc(k.key)}</b></td><td class="num">${fmt(k.lines)}</td><td class="num">${fmt(k.kg)}</td><td class="num">${fmt(k.priced_lines)}</td><td class="mono">${esc(k.first)}</td><td class="mono">${esc(k.last)}</td><td class="num">${fmt(k.median_2026, 1)}</td></tr>`)));
+  setBox("series", table(["Series", "Unit", "Tier", "From", "To", "Coverage", "Source"],
+    (s.series || []).map(x => {
+      const share = x.periods ? x.ok / x.periods : 0;
+      const cls = share > 0.95 ? "ok" : share > 0 ? "partial" : "none";
+      return `<tr><td class="wrap"><b>${esc(x.name)}</b><br><code>${esc(x.series_id)}</code></td><td>${esc(x.unit)}</td><td>${esc(x.tier)}</td><td class="mono">${esc(x.first)}</td><td class="mono">${esc(x.last)}</td><td><span class="pill ${cls}">${fmt(x.ok)} / ${fmt(x.periods)}</span></td><td>${x.link ? `<a href="${esc(x.link)}" target="_blank" rel="noopener">open</a>` : "–"}</td></tr>`;
+    })));
+  setBox("base", table(["Construction", "Base month", "Why"],
+    (s.base_months || []).map(b => `<tr><td><b>${esc(b.key)}</b></td><td class="mono">${esc(b.month || "none yet")}</td><td class="wrap">${esc(b.reason)}</td></tr>`)));
+  document.getElementById("foot").textContent = `Databank summary updated ${s.updated_at || "–"} · config ${s.config_version || "–"} · PO file sha256 ${String(s.po_sha256 || "").slice(0, 12)}…`;
+}
+(async () => {
+  const timer = setTimeout(() => {
+    ["po", "series", "base"].forEach(id => setBox(id, "The databank did not answer. Reload the page to try again.", true));
+  }, 10000);
+  const db = window.claude && await window.claude.use("db");
+  if (!db) {
+    clearTimeout(timer);
+    ["po", "series", "base"].forEach(id => setBox(id, "Sign in to claude.ai to read the databank.", true));
+    return;
+  }
+  db.doc("coverage/summary").onSnapshot(snap => {
+    clearTimeout(timer);
+    if (!snap.exists) {
+      ["po", "series", "base"].forEach(id => setBox(id, "Nothing loaded yet. Claude writes the summary after each Phase 1 load.", true));
+      return;
+    }
+    render(snap.data());
+  }, () => { clearTimeout(timer); ["po", "series", "base"].forEach(id => setBox(id, "Could not read the databank.", true)); });
+})();
+</script>
